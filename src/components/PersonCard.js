@@ -5,6 +5,8 @@ import styled from 'styled-components'
 const PersonCard = ({id, name, email, available, department}) => {
   const handleClick = ({currentTarget}) => {
     console.log(currentTarget.dataset.personId);
+    const {personId} = currentTarget.dataset;
+    // TODO fazer toggle do available
   }
   return (
     <Card onClick={handleClick} data-person-id={id} data-available={available}>

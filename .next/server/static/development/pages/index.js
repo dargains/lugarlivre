@@ -5518,6 +5518,9 @@ const PersonCard = ({
     currentTarget
   }) => {
     console.log(currentTarget.dataset.personId);
+    const {
+      personId
+    } = currentTarget.dataset; // TODO fazer toggle do available
   };
 
   return __jsx(Card, {
@@ -5526,19 +5529,19 @@ const PersonCard = ({
     "data-available": available,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 10
+      lineNumber: 12
     },
     __self: undefined
   }, __jsx(Title, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 11
+      lineNumber: 13
     },
     __self: undefined
   }, name), __jsx("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 12
+      lineNumber: 14
     },
     __self: undefined
   }, department));
