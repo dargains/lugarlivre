@@ -2,16 +2,21 @@ import React, {useState, useEffect} from 'react'
 import Head from 'next/head'
 import Header from '../components/Header';
 import loadFirebase from '../firebase'
+import { LLProvider } from '../contexts/llContext'
 
 import PersonList from '../components/PersonList'
 
+
 const Index = () => {
   const [cards, setCards] = useState([]);
+  const [db, setDb] = useState(null);
+
   useEffect (() => {
-    const getCards = (async () => {
+    const getCards = async () => {
       const firebase = await loadFirebase();
-      const db = firebase.firestore();
-      const cardsDB = db.collection('people').limit(10);
+      const ddb = firebase.firestore()
+      setDb(ddb);
+      const cardsDB = ddb.collection('people').limit(10);
       cardsDB.onSnapshot(snapshot => {
         const results = [];
         snapshot.forEach(doc => {
@@ -19,8 +24,10 @@ const Index = () => {
         })
         setCards(results)
       })
-    })();
-  },[])
+    };
+    getCards();
+  },[]);
+
   return (
     <main>
       <Head>
@@ -30,7 +37,9 @@ const Index = () => {
       </Head>
       <Header />
       <h1>Lugar livre</h1>
-      <PersonList cards={cards}/>
+      <LLProvider value={{cards, db}}>
+        <PersonList/>
+      </LLProvider>  
     </main>
   );
 }

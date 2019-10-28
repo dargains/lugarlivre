@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import LLContext from '../contexts/llContext'
 
 import PersonCard from '../components/PersonCard'
 
-const PersonList = ({cards}) => {
+const PersonList = () => {
+  const {cards} = useContext(LLContext);
   return (
     <List>
       {cards.map(card => <PersonCard key={card.id} {...card} />)}
