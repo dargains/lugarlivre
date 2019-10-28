@@ -30,7 +30,7 @@ const PersonCard = ({id, name, email, available, department}) => {
   return (
     <Card onClick={handleClick} data-available={available}>
       <Title black>{name}</Title>
-      <SmallTitle>{department}</SmallTitle>
+      <p>{department}</p>
     </Card>
   )
 }
@@ -47,10 +47,6 @@ const Title = styled.h2`
   font-size: 1.2em;
   margin-bottom: 10px;
   color: ${props => props.black ? 'black' : 'red'};
-`;
-
-const SmallTitle = styled(Title)`
-  font-size: 1em;
 `;
 
 PersonCard.propTypes = {
