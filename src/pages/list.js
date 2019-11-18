@@ -1,38 +1,44 @@
 import React, { useState, useEffect } from 'react'
+import Axios from 'axios'
 import 'reset-css'
 import Header from '../components/Header';
 import { LLProvider } from '../contexts/llContext'
-import loadFirebase from '../firebase'
 
 import PersonList from '../components/PersonList'
 
+const baseUrl = 'http://myeverydayapps.com/public/_/items'
+
 const List = () => {
 
-  const [cards, setCards] = useState([]);
-  const [db, setDb] = useState(null);
+  const [owners, setOwners] = useState([]);
+  const [believers, setBelievers] = useState([]);
+  const [page, setPage] = useState([]);
 
   useEffect(() => {
-    const getCards = async () => {
-      const firebase = await loadFirebase();
-      const ddb = firebase.firestore()
-      setDb(ddb);
-      const cardsDB = ddb.collection('people').limit(10);
-      cardsDB.onSnapshot(snapshot => {
-        const results = [];
-        snapshot.forEach(doc => {
-          results.push({ id: doc.id, ...doc.data() })
-        })
-        setCards(results)
-      })
-    };
-    getCards();
+    Axios(baseUrl + '/owners')
+    .then(({data}) => {
+      setOwners(data.data)
+    })
+    Axios(baseUrl + '/believers')
+    .then(({data}) => {
+      setBelievers(data.data)
+    })
+    Axios(baseUrl + '/module')
+    .then(({data}) => {
+      setBelievers(data.data)
+    })
+    Axios(baseUrl + '/page?fields=*.*.*')
+    .then(({data}) => {
+      setPage(data.data)
+      console.log(data.data);
+    })
   }, []);
 
   return (
     <div>
       <Header />
       <h1>Escolha uma pessoa</h1>
-      <LLProvider value={{ cards, db }}>
+      <LLProvider value={{ baseUrl, owners, believers }}>
         <PersonList />
       </LLProvider>
     </div>

@@ -6,10 +6,10 @@ import LLContext from '../contexts/llContext'
 import PersonCard from '../components/PersonCard'
 
 const PersonList = () => {
-  const {cards} = useContext(LLContext);
+  const {believers} = useContext(LLContext);
   return (
     <List>
-      {cards.map(card => <PersonCard key={card.id} {...card} />)}
+      {believers.map(card => <PersonCard key={card.id} {...card} />)}
     </List>
   )
 }
@@ -24,7 +24,7 @@ const List = styled.ul`
 `;
 
 PersonList.propTypes = {
-  cards: PropTypes.array
+  believers: PropTypes.array
 }
 
 export default PersonList

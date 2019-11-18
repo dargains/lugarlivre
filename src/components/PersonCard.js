@@ -5,7 +5,7 @@ import LLContext from '../contexts/llContext'
 
 import Axios from 'axios'
 
-const url = 'https://cors-anywhere.herokuapp.com/https://api.sendgrid.com/v3/mail/send';
+const emailEndpoint = 'https://cors-anywhere.herokuapp.com/https://api.sendgrid.com/v3/mail/send';
 const headers = {
   'Authorization': 'Bearer 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',
   'Content-Type': 'application/json'
@@ -13,23 +13,21 @@ const headers = {
 
 
 const PersonCard = ({id, name, email, available, department}) => {
-  const {db} = useContext(LLContext);
-  const handleClick = async ({currentTarget}) => {
-    await db.collection('people').doc(id).set({available: !available}, {merge: true})
-    // .then(() => {
-      currentTarget.setAttribute('data-available', !available)
+  const {baseUrl} = useContext(LLContext);
+  const handleClick = () => {
+    
       // TODO send email
       const data = {"personalizations": [{"to": [{"email": email}]}],"from": {"email": "lugarlivref6@gmail.com"},"subject": "Tens um lugar de garagem!","content": [{"type": "text/plain", "value": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`}]}
       
-      Axios.post(url, data, {headers} )
+      Axios.post(emailEndpoint, data, {headers} )
       .then(response => {
         console.log(response);
       })
-    // })
+      Axios.post(baseUrl + )
   }
   return (
     <Card onClick={handleClick} data-available={available}>
-      <Title black>{name}</Title>
+      <Title>{name}</Title>
       <p>{department}</p>
     </Card>
   )
@@ -46,11 +44,10 @@ const Card = styled.li`
 const Title = styled.h2`
   font-size: 1.2em;
   margin-bottom: 10px;
-  color: ${props => props.black ? 'black' : 'red'};
 `;
 
 PersonCard.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   name: PropTypes.string,
   email: PropTypes.string,
   avaiable: PropTypes.bool,

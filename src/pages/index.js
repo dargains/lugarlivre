@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Header from '../components/Header';
 
 const Index = () => {
-  const [startDate, setStartDate] = useState(new Date())
   return (
     <main>
       <Head>
@@ -14,6 +13,7 @@ const Index = () => {
       </Head>
       <Header />
       <h1>Lugar livre</h1>
+      
       <form>
 
       </form>
