@@ -5,25 +5,25 @@ import LLContext from '../contexts/llContext'
 
 import Axios from 'axios'
 
-const emailEndpoint = 'https://cors-anywhere.herokuapp.com/https://api.sendgrid.com/v3/mail/send';
-const headers = {
-  'Authorization': 'Bearer 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',
-  'Content-Type': 'application/json'
-};
+const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ==';
 
 
 const PersonCard = ({id, name, email, available, department}) => {
   const {baseUrl} = useContext(LLContext);
   const handleClick = () => {
+
+      const data = JSON.stringify({
+        "toEmail": email,
+        "fromEmail": "lugar.livre@fullsix.pt",
+        "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
+        "emailMessage": "Hey, tens um lugar de garagem!"
+      })
     
-      // TODO send email
-      const data = {"personalizations": [{"to": [{"email": email}]}],"from": {"email": "lugarlivref6@gmail.com"},"subject": "Tens um lugar de garagem!","content": [{"type": "text/plain", "value": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`}]}
       
-      Axios.post(emailEndpoint, data, {headers} )
+      Axios.post(emailEndpoint, data )
       .then(response => {
         console.log(response);
       })
-      Axios.post(baseUrl + )
   }
   return (
     <Card onClick={handleClick} data-available={available}>
