@@ -1,26 +1,24 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import LLContext from '../contexts/llContext'
 
 import Axios from 'axios'
 
 const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ==';
 
 
-const PersonCard = ({id, name, email, available, department}) => {
-  const {baseUrl} = useContext(LLContext);
+const PersonCard = ({ id, name, email, available, department }) => {
   const handleClick = () => {
 
-      const data = JSON.stringify({
-        "toEmail": email,
-        "fromEmail": "lugar.livre@fullsix.pt",
-        "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
-        "emailMessage": "Hey, tens um lugar de garagem!"
-      })
-    
-      
-      Axios.post(emailEndpoint, data )
+    const data = JSON.stringify({
+      "toEmail": email,
+      "fromEmail": "lugar.livre@fullsix.pt",
+      "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
+      "emailMessage": "Hey, tens um lugar de garagem!"
+    })
+
+
+    Axios.post(emailEndpoint, data)
       .then(response => {
         console.log(response);
       })

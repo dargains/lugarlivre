@@ -1,17 +1,13 @@
 import React from 'react'
-import Link from 'next/link';
-
-const linkStyle = {
-  marginRight: 15
-};
+import { Link } from "react-router-dom";
 
 const Header = () => (
   <div>
-    <Link href="/">
-      <a style={linkStyle}>Home</a>
+    <Link to="/">
+      Home
     </Link>
-    <Link href="/list">
-      <a style={linkStyle}>List</a>
+    <Link to="/list">
+      List
     </Link>
   </div>
 );
