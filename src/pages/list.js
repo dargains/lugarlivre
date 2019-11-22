@@ -3,15 +3,19 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import PersonCard from '../components/PersonCard'
+import Button from '../components/Button'
 
-const List = ({ believers }) => {
-
+const List = ({ believers, chosenBeliever, handleBelieverChange }) => {
+  const isChosen = id => chosenBeliever?.id === id
   return (
     <>
-      <h1>Escolha uma pessoa</h1>
+      <h2>Escolha uma pessoa</h2>
       <PersonList>
-        {believers.map(card => <PersonCard key={card.id} {...card} />)}
+        {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={handleBelieverChange} isChosen={isChosen(card.id)} />)}
       </PersonList>
+      <Button>Random</Button>
+      <Button>Confirmar</Button>
+      <Button>Voltar</Button>
     </>
   )
 }

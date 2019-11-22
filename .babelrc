@@ -10,12 +10,6 @@
         "displayName": true,
         "preprocess": false
       }
-    ],
-    [
-      "@babel/plugin-proposal-pipeline-operator",
-      {
-        "proposal": "minimal"
-      }
-    ],
+    ]
   ]
 }
