@@ -1,17 +1,14 @@
 //import React, { useState } from 'react'
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import Search from 'react-search';
 
-import LLContext from '../contexts/llContext'
 
 import Button from '../components/Button'
 
-const Home = () => {
-  const { owners } = useContext(LLContext);
-  const [currentOwner, setCurrentOwner] = useState({});
+const Home = ({ owners, currentOwner, handleOwnerChange }) => {
 
   const selectOwner = (items) => {
-    setCurrentOwner(items[0])
+    handleOwnerChange(items[0])
   }
   const handleKey = (e) => {
     console.log(e)

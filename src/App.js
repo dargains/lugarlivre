@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Axios from 'axios'
 
-
-import { LLProvider } from './contexts/llContext'
 
 import Header from './components/Header'
 import Home from './pages/Home'
 import List from './pages/List'
+import Confirmation from './pages/Confirmation'
 
 const App = () => {
-  const baseUrl = 'http://myeverydayapps.com/public/_/items'
+  const baseUrl = 'http://myeverydayapps.com/public/_/items';
   const [owners, setOwners] = useState([]);
+  const [currentOwner, setCurrentOwner] = useState([]);
   const [believers, setBelievers] = useState([]);
+  const [chosenBeliever, setChosenBeliever] = useState([]);
+  const [date, setDate] = useState('')
+
+  const handleOwnerChange = token => {
+    const newOwner = owners.find(owner => owner.id === token.id)
+    setCurrentOwner(newOwner)
+  }
 
   useEffect(() => {
     Axios(baseUrl + '/owners')
@@ -30,14 +37,24 @@ const App = () => {
       <main className="App">
         <Header />
         <h1>Lugar Livre</h1>
-        <LLProvider value={{ baseUrl, owners, believers }}>
-          {/* STEP 1 */}
-          <Home />
-          {/* STEP 2 */}
-          <List />
-          {/* STEP 3 */}
-
-        </LLProvider>
+        {/* STEP 1 */}
+        <Home
+          owners={owners}
+          currentOwner={currentOwner}
+          handleOwnerChange={handleOwnerChange}
+          date={date}
+          handleDateChange={setDate}
+        />
+        {/* STEP 2 */}
+        <List
+          believers={believers}
+          handleBelieverChange={setChosenBeliever}
+        />
+        {/* STEP 3 */}
+        <Confirmation
+          currentOwner={currentOwner}
+          chosenBeliever={chosenBeliever}
+        />
       </main>
     </Router>
   );
