@@ -26,7 +26,6 @@ const App = () => {
   const handleBelieverChange = id => {
     const newBeliever = believers.find(believer => believer.id === id)
     setChosenBeliever(newBeliever)
-    console.log(newBeliever);
   }
 
   const sendEmail = () => {

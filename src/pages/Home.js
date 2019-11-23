@@ -8,7 +8,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Button from '../components/Button'
 import moment from 'moment';
 
-const Home = ({ owners, currentOwner, handleOwnerChange, handleStartDateChange, handleEndDateChange, startDate, endDate }) => {
+const Home = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange }) => {
   const [focusedInput, setFocus] = useState(startDate)
   const handleDateChange = ({ startDate, endDate }) => {
     console.log(startDate, endDate);
