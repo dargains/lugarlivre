@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import PersonCard from '../components/PersonCard'
-import Button from '../components/Button'
+import PersonCard from './PersonCard'
+import Button from './Button'
 
 const List = ({ believers, chosenBeliever, handleBelieverChange }) => {
   const isChosen = id => chosenBeliever?.id === id

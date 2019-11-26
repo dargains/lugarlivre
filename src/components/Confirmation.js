@@ -7,7 +7,7 @@ const Confirmation = ({ currentOwner, chosenBeliever, startDate, endDate, handle
   return (
     <>
       <h2>Confirme a escolha</h2>
-      <p>{currentOwner?.name} quer oferecer o lugar a {chosenBeliever.name} de {moment(startDate).format("DD MM YYYY")} até {moment(endDate).format("DD MM YYYY")}</p>
+      <p>{currentOwner?.name} quer oferecer o lugar a {chosenBeliever.name} de {moment(startDate).format("DD [de] MMMM")} até {moment(endDate).format("DD [de] MMMM")}</p>
       <Button handleClick={handleConfirmation}>Confirmar</Button>
       <Button>Voltar</Button>
     </>
