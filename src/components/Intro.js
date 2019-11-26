@@ -9,7 +9,7 @@ import Button from '../components/Button'
 import moment from 'moment';
 import 'moment/locale/pt'
 
-const Home = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange }) => {
+const Intro = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange }) => {
   const [focusedInput, setFocus] = useState(null)
   const [value, setValue] = useState('')
   const handleDateChange = ({ startDate, endDate }) => {
@@ -71,4 +71,4 @@ const Home = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateCh
   );
 }
 
-export default Home
+export default Intro
