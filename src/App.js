@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router } from "react-router-dom";
 import Axios from 'axios'
-import moment from 'moment'
-
 
 import Header from './components/Header'
 import Home from './pages/Home'
@@ -16,7 +14,7 @@ const App = () => {
   const [currentOwner, setCurrentOwner] = useState([]);
   const [believers, setBelievers] = useState([]);
   const [chosenBeliever, setChosenBeliever] = useState({});
-  const [startDate, setStartDate] = useState(moment())
+  const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
 
   const handleOwnerChange = token => {
@@ -31,17 +29,14 @@ const App = () => {
   const sendEmail = () => {
     const { name, email } = chosenBeliever
     const data = JSON.stringify({
+      "fromName": "Lugar Livre",
       "toEmail": email,
       "fromEmail": "lugar.livre@fullsix.pt",
       "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
-      "emailMessage": "Hey, tens um lugar de garagem!"
+      "emailMessage": `Hey, tens um lugar de garagem! Muito fixe, huh?`
     })
 
-
     Axios.post(emailEndpoint, data)
-      .then(response => {
-        console.log(response);
-      })
   }
 
   useEffect(() => {
@@ -68,8 +63,8 @@ const App = () => {
           handleOwnerChange={handleOwnerChange}
           startDate={startDate}
           endDate={endDate}
-          handleStartDateChange={setEndDate}
-          handleEndDateChange={setStartDate}
+          handleStartDateChange={setStartDate}
+          handleEndDateChange={setEndDate}
         />
 
         {/* STEP 2 */}

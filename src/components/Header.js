@@ -1,15 +1,9 @@
 import React from 'react'
-import { Link } from "react-router-dom";
 
 const Header = () => (
-  <div>
-    <Link to="/">
-      Home
-    </Link>
-    <Link to="/list">
-      List
-    </Link>
-  </div>
+  <header>
+    LUGAR LIVRE
+  </header>
 );
 
 export default Header;
