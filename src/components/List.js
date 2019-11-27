@@ -12,7 +12,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
     handleBelieverChange(randomId.id)
   }
   return (
-    <main style={{ opacity: isActive ? 1 : '0.5' }}>
+    <article style={{ opacity: isActive ? 1 : '0.5' }}>
       <h2>Escolha uma pessoa</h2>
       <PersonList>
         {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={handleBelieverChange} isChosen={isChosen(card.id)} />)}
@@ -20,7 +20,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
       <Button handleClick={chooseRandom}>Random</Button>
       <Button handleClick={handleNext}>Confirmar</Button>
       <Button handleClick={handleBack}>Voltar</Button>
-    </main>
+    </article>
   )
 }
 const PersonList = styled.ul`

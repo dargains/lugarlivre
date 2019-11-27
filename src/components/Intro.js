@@ -9,7 +9,7 @@ import Button from '../components/Button'
 import moment from 'moment';
 import 'moment/locale/pt'
 
-const Intro = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext, isActive }) => {
+const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext, isActive }) => {
   const [focusedInput, setFocus] = useState(null)
   const [value, setValue] = useState('')
   const handleDateChange = ({ startDate, endDate }) => {
@@ -17,7 +17,7 @@ const Intro = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateC
     handleEndDateChange(endDate)
   }
   return (
-    <main style={{ opacity: isActive ? 1 : '0.5' }}>
+    <article style={{ opacity: isActive ? 1 : '0.5' }}>
       <h2>home</h2>
       <h3>Quem és?</h3>
       <ReactAutocomplete
@@ -49,25 +49,29 @@ const Intro = ({ owners, handleOwnerChange, startDate, endDate, handleStartDateC
           maxHeight: '20%', // TODO: don't cheat, let it flow to the bottom
         }}
       />
-      <p>datas</p>
-      <DateRangePicker
-        startDate={startDate}
-        startDateId="startDate"
-        endDate={endDate}
-        endDateId="endDate"
-        numberOfMonths={2}
-        minimumNights={0}
-        small={true}
-        minDate={moment()}
-        maxDate={moment().add(10, 'days')}
-        onDatesChange={handleDateChange}
-        focusedInput={focusedInput}
-        onFocusChange={input => setFocus(input)}
-        startDatePlaceholderText="Data início"
-        endDatePlaceholderText="Data fim"
-      />
+      <br /><br />
+      {
+        !!currentOwner.id &&
+        <DateRangePicker
+          startDate={startDate}
+          startDateId="startDate"
+          endDate={endDate}
+          endDateId="endDate"
+          numberOfMonths={1}
+          minimumNights={0}
+          small={true}
+          minDate={moment()}
+          maxDate={moment().add(10, 'days')}
+          onDatesChange={handleDateChange}
+          focusedInput={focusedInput}
+          onFocusChange={input => setFocus(input)}
+          startDatePlaceholderText="Data início"
+          endDatePlaceholderText="Data fim"
+        />
+      }
+      <br /><br />
       <Button handleClick={handleNext}>continuar</Button>
-    </main>
+    </article>
   );
 }
 

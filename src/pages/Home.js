@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
+import styled from 'styled-components'
 
 import Intro from '../components/Intro'
 import List from '../components/List'
@@ -65,7 +66,7 @@ export default function Home() {
       })
   }, []);
   return (
-    <div>
+    <Main>
       <h1>Lugar Livre</h1>
 
       {/* STEP 1 */}
@@ -102,6 +103,12 @@ export default function Home() {
         handleBack={() => goToStep(2)}
         isActive={step === 3}
       />
-    </div>
+    </Main>
   )
 }
+
+const Main = styled.main`
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+`
