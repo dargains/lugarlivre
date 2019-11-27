@@ -9,16 +9,12 @@ export default function Home() {
   const baseUrl = 'http://myeverydayapps.com/public/_/items';
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ==';
   const [owners, setOwners] = useState([]);
-  const [currentOwner, setCurrentOwner] = useState([]);
   const [believers, setBelievers] = useState([]);
+  const [currentOwner, setCurrentOwner] = useState({});
   const [chosenBeliever, setChosenBeliever] = useState({});
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
 
-  const handleOwnerChange = token => {
-    const newOwner = owners.find(owner => owner.id === token.id)
-    setCurrentOwner(newOwner)
-  }
   const handleBelieverChange = id => {
     const newBeliever = believers.find(believer => believer.id === id)
     setChosenBeliever(newBeliever)
@@ -56,7 +52,7 @@ export default function Home() {
       <Intro
         owners={owners}
         currentOwner={currentOwner}
-        handleOwnerChange={handleOwnerChange}
+        handleOwnerChange={setCurrentOwner}
         startDate={startDate}
         endDate={endDate}
         handleStartDateChange={setStartDate}

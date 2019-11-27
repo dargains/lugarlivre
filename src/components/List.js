@@ -30,6 +30,7 @@ const PersonList = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
   row-gap: 20px;
+  list-style: none;
 `;
 
 PersonList.propTypes = {

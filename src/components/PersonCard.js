@@ -20,7 +20,7 @@ const Card = styled.li`
   border-radius: 5px;
   cursor: pointer;
   &.selected {
-    background-color: lightgray;
+    background-color: #ededed;
   }
 `;
 const Title = styled.h2`
