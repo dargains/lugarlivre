@@ -6,20 +6,31 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 
 import Button from '../components/Button'
+import AltButton from '../components/AltButton'
 import moment from 'moment';
 import 'moment/locale/pt'
 
 const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext, isActive }) => {
   const [focusedInput, setFocus] = useState(null)
+  const [calendarOpened, setCalendarOpen] = useState(false)
   const [value, setValue] = useState('')
   const handleDateChange = ({ startDate, endDate }) => {
     handleStartDateChange(startDate)
     handleEndDateChange(endDate)
   }
+  const setDate = day => {
+    if (day === 'today') {
+      handleStartDateChange(moment())
+      handleEndDateChange(moment())
+    } else {
+      handleStartDateChange(moment().add(1, 'day'))
+      handleEndDateChange(moment().add(1, 'day'))
+    }
+  }
   return (
     <article style={{ opacity: isActive ? 1 : '0.5' }}>
       <h2>home</h2>
-      <h3>Quem és?</h3>
+      <p>Partilha o teu lugar de estacionamento</p>
       <ReactAutocomplete
         items={owners}
         shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
@@ -51,7 +62,15 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       />
       <br /><br />
       {
-        !!currentOwner.id &&
+        !calendarOpened &&
+        <>
+          <AltButton handleClick={() => setDate('today')}>hoje</AltButton>
+          <AltButton handleClick={() => setDate('tomorrow')}>amanhã</AltButton>
+          <AltButton handleClick={() => setCalendarOpen(true)}>outros dias</AltButton>
+        </>
+      }
+      {
+        calendarOpened &&
         <DateRangePicker
           startDate={startDate}
           startDateId="startDate"
@@ -70,7 +89,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
         />
       }
       <br /><br />
-      <Button handleClick={handleNext}>continuar</Button>
+      <Button handleClick={handleNext}>Continuar</Button>
     </article>
   );
 }

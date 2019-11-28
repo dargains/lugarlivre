@@ -18,7 +18,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
         {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={handleBelieverChange} isChosen={isChosen(card.id)} />)}
       </PersonList>
       <Button handleClick={chooseRandom}>Random</Button>
-      <Button handleClick={handleNext}>Confirmar</Button>
+      <Button handleClick={handleNext}>Continuar</Button>
       <Button handleClick={handleBack}>Voltar</Button>
     </article>
   )

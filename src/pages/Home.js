@@ -29,27 +29,35 @@ export default function Home() {
     setChosenBeliever(newBeliever)
   }
 
-  const sendEmail = () => {
+  const sendEmail = id => {
     const { name, email } = chosenBeliever
     const data = JSON.stringify({
       "fromName": "Lugar Livre",
-      "toEmail": email,
+      "toEmail": "andre.dargains@fullsix.pt", //email,
       "fromEmail": "lugar.livre@fullsix.pt",
       "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
-      "emailMessage": `Hey, tens um lugar de garagem! Muito fixe, huh?`
+      "emailMessage": `<div style="font-family: sans-serif;">
+      <h2>Hey, tens um lugar de garagem!</h2>
+      <br />
+      <a href="http://localhost:3000/accept?code=${id}">Clica aqui para aceitar</a>
+      <br />
+      <a href="http://localhost:3000/refuse?code=${id}">Clica aqui para recusar</a>
+      </div>`
     })
 
     Axios.post(emailEndpoint, data)
   }
 
   const confirmLend = () => {
-    // sendEmail();
 
     Axios.post(baseUrl + '/loans', {
       owner_id: currentOwner.id,
       believer_id: chosenBeliever.id,
       start: moment(startDate).format('YYYY-MM-DD'),
       end: moment(endDate).format('YYYY-MM-DD')
+    }).then(({ data }) => {
+      const { id } = data.data;
+      sendEmail(id);
     })
   }
 

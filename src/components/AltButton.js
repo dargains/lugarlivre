@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Button = ({ children, handleClick }) => {
+const AltButton = ({ children, handleClick }) => {
   return (
     <BTN onClick={handleClick}>
       {children}
@@ -10,21 +10,18 @@ const Button = ({ children, handleClick }) => {
 }
 
 const BTN = styled.button`
-  background-color: var(--m-01);
-  border-radius: 4px;
-  width: 100%;
-  max-width: 200px;
-  display: block;
+  color: var(--m-01);
   padding: 16px 0;
-  margin: 10px auto;
+  margin: 0 5px;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
-  color: var(--neu-01);
-  font-size: 20px;
+  font-size: 16px;
   line-height: 27px;
   cursor: pointer;
-  box-shadow: 0 5px 20px rgba(0,0,0,.2);
+  &:hover {
+    opacity: .7;
+  }
 `;
 
-export default Button;
+export default AltButton;
