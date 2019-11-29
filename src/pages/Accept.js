@@ -10,6 +10,9 @@ const AcceptScreen = () => {
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
   const [owner, setOwner] = useState({})
   const [loan, setLoan] = useState({})
+  const [startDateString, setStartDateString] = useState('')
+  const [endDateString, setEndDateString] = useState('')
+  const [isSameDay, setSameDay] = useState(false)
 
   const sendEmail = (owner, believer) => {
     const data = JSON.stringify({
@@ -39,6 +42,10 @@ const AcceptScreen = () => {
     const believerResponse = await Axios(baseUrl + `/believers?filter[id][eq]=${believerId}`);
     const currentbeliever = believerResponse.data.data[0];
 
+    setStartDateString(moment(currentLoan.start).isSame(currentLoan.end, 'year') ? moment(currentLoan.start).isSame(currentLoan.end, 'month') ? moment(currentLoan.start).format('DD') : moment(currentLoan.start).format('DD [de] MMMM') : moment(currentLoan.start).format('DD [de] MMMM [de] YYYY'));
+    setEndDateString(moment(currentLoan.end).format("DD [de] MMMM [de] YYYY"))
+    setSameDay(moment(currentLoan.start).isSame(currentLoan.end))
+
     sendEmail(currentOwner, currentbeliever)
   }
 
@@ -60,12 +67,12 @@ const AcceptScreen = () => {
       <Subtitle>Parabéns!</Subtitle>
       <Body>Tens um lugar reservado para ti.</Body>
       <Box>
-        <Body>De <span>{moment(loan?.start).format('LL')}</span> a <span>{moment(loan?.end).format('LL')}</span>.</Body>
+        <Body>{isSameDay ? `${endDateString}` : `De ${startDateString} a ${endDateString}`}.</Body>
         <Body>Edificio <span>{owner?.building}</span></Body>
         <Body><span>{owner?.spot}</span></Body>
       </Box>
       <Button>Guardar</Button>
-    </Container>
+    </Container >
   )
 }
 
