@@ -1,5 +1,6 @@
 //import React, { useState } from 'react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import ReactAutocomplete from 'react-autocomplete';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/initialize';
@@ -10,15 +11,22 @@ import AltButton from '../components/AltButton'
 import moment from 'moment';
 import 'moment/locale/pt'
 
-const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext, isActive }) => {
+const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext }) => {
   const [focusedInput, setFocus] = useState(null)
   const [calendarOpened, setCalendarOpen] = useState(false)
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(currentOwner.name)
+  const [day, setDay] = useState('')
+  const today = moment();
+  const tomorrow = moment().add(1, 'day');
+  const isToday = today.isSame(startDate, 'd') && today.isSame(endDate, 'd')
+  const isTomorrow = tomorrow.isSame(startDate, 'd') && tomorrow.isSame(endDate, 'd')
+
   const handleDateChange = ({ startDate, endDate }) => {
     handleStartDateChange(startDate)
     handleEndDateChange(endDate)
   }
   const setDate = day => {
+    setDay(day)
     if (day === 'today') {
       handleStartDateChange(moment())
       handleEndDateChange(moment())
@@ -27,12 +35,31 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       handleEndDateChange(moment().add(1, 'day'))
     }
   }
+  const goToNext = () => {
+    if (!currentOwner.name) {
+      document.querySelector('input').classList.add('error')
+    }
+    if (!startDate || !endDate) {
+      console.log('falta date');
+    }
+    else handleNext()
+  }
+
+  useEffect(() => {
+
+    if (startDate && endDate && !isToday && !isTomorrow) setCalendarOpen(true)
+  }, [])
+
   return (
-    <article style={{ opacity: isActive ? 1 : '0.5' }}>
-      <h2>home</h2>
-      <p>Partilha o teu lugar de estacionamento</p>
+    <Container>
+      <Title>Lugar Livre</Title>
+      <Subtitle>Partilha o teu lugar de estacionamento</Subtitle>
       <ReactAutocomplete
         items={owners}
+        inputProps={{
+          placeholder: 'Nome',
+          onFocus: ({ target }) => { target.classList.remove('error') }
+        }}
         shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
         getItemValue={item => item.name}
         renderItem={(item, highlighted) =>
@@ -53,45 +80,88 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
           borderRadius: '3px',
           boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
           background: 'rgba(255, 255, 255, 0.9)',
-          padding: '2px 0',
+          padding: '5px 0',
           position: 'fixed',
           overflow: 'auto',
           zIndex: 10,
-          maxHeight: '20%', // TODO: don't cheat, let it flow to the bottom
+          maxHeight: '20%',
+          cursor: 'pointer',
+          textAlign: 'left'
         }}
       />
       <br /><br />
       {
-        !calendarOpened &&
-        <>
-          <AltButton handleClick={() => setDate('today')}>hoje</AltButton>
-          <AltButton handleClick={() => setDate('tomorrow')}>amanhã</AltButton>
-          <AltButton handleClick={() => setCalendarOpen(true)}>outros dias</AltButton>
-        </>
-      }
-      {
-        calendarOpened &&
-        <DateRangePicker
-          startDate={startDate}
-          startDateId="startDate"
-          endDate={endDate}
-          endDateId="endDate"
-          numberOfMonths={1}
-          minimumNights={0}
-          small={true}
-          minDate={moment()}
-          maxDate={moment().add(10, 'days')}
-          onDatesChange={handleDateChange}
-          focusedInput={focusedInput}
-          onFocusChange={input => setFocus(input)}
-          startDatePlaceholderText="Data início"
-          endDatePlaceholderText="Data fim"
-        />
+        calendarOpened
+          ? <DateRangePicker
+            startDate={startDate}
+            startDateId="startDate"
+            endDate={endDate}
+            endDateId="endDate"
+            numberOfMonths={1}
+            minimumNights={0}
+            small={true}
+            minDate={moment()}
+            maxDate={moment().add(10, 'days')}
+            onDatesChange={handleDateChange}
+            focusedInput={focusedInput}
+            onFocusChange={input => setFocus(input)}
+            startDatePlaceholderText="Data início"
+            endDatePlaceholderText="Data fim"
+          />
+          : <>
+            <AltButton handleClick={() => setDate('today')} isActive={isToday}>hoje</AltButton>
+            <AltButton handleClick={() => setDate('tomorrow')} isActive={isTomorrow}>amanhã</AltButton>
+            <AltButton handleClick={() => setCalendarOpen(true)}>outros dias</AltButton>
+          </>
       }
       <br /><br />
-      <Button handleClick={handleNext}>Continuar</Button>
-    </article>
+      <Button handleClick={goToNext}>Continuar</Button>
+      <div style={{ marginTop: '60px' }}>
+        <Body>Não toleramos desculpas</Body>
+        <Body><span>Faz-te esperto!</span></Body>
+      </div>
+    </Container>
   );
 }
+
+const Container = styled.article`
+  text-align: center;
+  input {
+    text-align: left;
+    padding: 18px 16px;
+    border: 1px solid var(--neu-03);
+    border-radius: 4px;
+    font-size: 1.2em;
+    color: var(--neu-05);
+    &::placeholder {
+      color: var(--neu-04);
+    }
+    &.error {
+      color: var(--m-02);
+      border-color: var(--m-02);
+    }
+  }
+`;
+
+const Title = styled.h1`
+  font-size: 1em;
+  text-transform: uppercase;
+`;
+
+const Subtitle = styled.h2`
+  margin: 20px 0 80px;
+  font-size: 18px;
+  font-weight: normal;
+`;
+
+const Body = styled.p`
+  font-size: 14px;
+  line-height: 20px;
+  margin: 2px auto;
+  span {
+    color: var(--m-01);
+    font-weight: bold;
+  }
+`;
 
 export default Intro

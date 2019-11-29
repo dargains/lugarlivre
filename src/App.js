@@ -12,7 +12,7 @@ const App = () => {
   return (
     <Router>
       <main className="App">
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route path="/accept">
             <Accept />

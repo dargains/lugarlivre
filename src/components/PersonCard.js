@@ -19,6 +19,7 @@ const Card = styled.li`
   box-shadow: 2px 2px 20px rgba(0,0,0,.2);
   border-radius: 5px;
   cursor: pointer;
+  text-align: left;
   &.selected {
     background-color: #ededed;
   }

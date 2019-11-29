@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const AltButton = ({ children, handleClick }) => {
+const AltButton = ({ children, handleClick, isActive }) => {
   return (
-    <BTN onClick={handleClick}>
+    <BTN onClick={handleClick} className={`${isActive ? 'active' : ''}`}>
       {children}
     </BTN>
   )
@@ -11,16 +11,21 @@ const AltButton = ({ children, handleClick }) => {
 
 const BTN = styled.button`
   color: var(--m-01);
-  padding: 16px 0;
+  padding: 8px 16px;
+  border-radius: 4px;
   margin: 0 5px;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  line-height: 27px;
+  font-size: 1em;
   cursor: pointer;
+  background-color: transparent;
+  transition: background-color .2s ease-in-out;
   &:hover {
-    opacity: .7;
+    background-color: var(--neu-02);
+  }
+  &.active {
+    background-color: var(--neu-03);
   }
 `;
 

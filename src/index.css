@@ -1,6 +1,11 @@
 :root {
   --m-01: #f9c653;
+  --m-02: #f6334f;
   --neu-01: #ffffff;
+  --neu-02: #f8f8f8;
+  --neu-03: #f1f2f6;
+  --neu-04: #c4c6cd;
+  --neu-05: #484d5a;
 }
 
 body {
@@ -8,4 +13,7 @@ body {
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+main {
+  padding: 48px 28px;
 }

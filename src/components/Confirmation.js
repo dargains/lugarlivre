@@ -3,9 +3,9 @@ import moment from 'moment'
 
 import Button from '../components/Button'
 
-const Confirmation = ({ currentOwner, chosenBeliever, startDate, endDate, handleConfirmation, handleBack, isActive }) => {
+const Confirmation = ({ currentOwner, chosenBeliever, startDate, endDate, handleConfirmation, handleBack }) => {
   return (
-    <article style={{ opacity: isActive ? 1 : '0.5' }}>
+    <article>
       <h2>Confirme a escolha</h2>
       <p>{currentOwner?.name} quer oferecer o lugar a {chosenBeliever.name} de {moment(startDate).format("DD [de] MMMM")} até {moment(endDate).format("DD [de] MMMM")}</p>
       <Button handleClick={handleConfirmation}>Confirmar</Button>

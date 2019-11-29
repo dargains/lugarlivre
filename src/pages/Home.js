@@ -74,47 +74,51 @@ export default function Home() {
   }, []);
   return (
     <Main>
-      <h1>Lugar Livre</h1>
-
       {/* STEP 1 */}
-      <Intro
-        owners={owners}
-        currentOwner={currentOwner}
-        handleOwnerChange={setCurrentOwner}
-        startDate={startDate}
-        endDate={endDate}
-        handleStartDateChange={setStartDate}
-        handleEndDateChange={setEndDate}
-        handleNext={() => goToStep(2)}
-        isActive={step === 1}
-      />
+      {
+        step === 1 &&
+        <Intro
+          owners={owners}
+          currentOwner={currentOwner}
+          handleOwnerChange={setCurrentOwner}
+          startDate={startDate}
+          endDate={endDate}
+          handleStartDateChange={setStartDate}
+          handleEndDateChange={setEndDate}
+          handleNext={() => goToStep(2)}
+        />
+      }
 
       {/* STEP 2 */}
-      <List
-        believers={believers}
-        chosenBeliever={chosenBeliever}
-        handleBelieverChange={handleBelieverChange}
-        handleNext={() => goToStep(3)}
-        handleBack={() => goToStep(1)}
-        isActive={step === 2}
-      />
+      {
+        step === 2 &&
+        <List
+          believers={believers}
+          chosenBeliever={chosenBeliever}
+          handleBelieverChange={handleBelieverChange}
+          handleNext={() => goToStep(3)}
+          handleBack={() => goToStep(1)}
+        />
+      }
 
       {/* STEP 3 */}
-      <Confirmation
-        currentOwner={currentOwner}
-        chosenBeliever={chosenBeliever}
-        startDate={startDate}
-        endDate={endDate}
-        step={step}
-        handleConfirmation={confirmLend}
-        handleBack={() => goToStep(2)}
-        isActive={step === 3}
-      />
+      {
+        step === 3 &&
+        <Confirmation
+          currentOwner={currentOwner}
+          chosenBeliever={chosenBeliever}
+          startDate={startDate}
+          endDate={endDate}
+          step={step}
+          handleConfirmation={confirmLend}
+          handleBack={() => goToStep(2)}
+        />
+      }
     </Main>
   )
 }
 
-const Main = styled.main`
+const Main = styled.div`
   margin: 0 auto;
   max-width: 800px;
   width: 100%;
