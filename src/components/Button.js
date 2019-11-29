@@ -25,6 +25,13 @@ const BTN = styled.button`
   line-height: 27px;
   cursor: pointer;
   box-shadow: 0 5px 20px rgba(0,0,0,.2);
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  &:hover {
+    transform: translate3d(0,2px,0);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  }
 `;
 
 export default Button;

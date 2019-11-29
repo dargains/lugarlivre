@@ -39,9 +39,8 @@ export default function Home() {
       "emailMessage": `<div style="font-family: sans-serif;">
       <h2>Hey, tens um lugar de garagem!</h2>
       <br />
-      <a href="http://localhost:3000/accept?code=${id}">Clica aqui para aceitar</a>
-      <br />
-      <a href="http://localhost:3000/refuse?code=${id}">Clica aqui para recusar</a>
+      <p>Clica <a href="http://localhost:3000/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
+      <p>Clica <a href="http://localhost:3000/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
       </div>`
     })
 

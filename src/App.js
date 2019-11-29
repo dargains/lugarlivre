@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from './components/Header'
 import Home from './pages/Home'
-import AcceptScreen from './pages/AcceptScreen';
-import RefuseScreen from './pages/RefuseScreen';
+import Accept from './pages/Accept';
+import Refuse from './pages/Refuse';
+import Error from './pages/Error';
 
 const App = () => {
 
@@ -14,10 +15,13 @@ const App = () => {
         <Header />
         <Switch>
           <Route path="/accept">
-            <AcceptScreen />
+            <Accept />
           </Route>
           <Route path="/refuse">
-            <RefuseScreen />
+            <Refuse />
+          </Route>
+          <Route path="/error">
+            <Error />
           </Route>
           <Route path="/">
             <Home />
