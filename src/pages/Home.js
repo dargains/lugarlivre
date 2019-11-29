@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import styled from 'styled-components'
+import Cookies from 'js-cookie'
 
 import Intro from '../components/Intro'
 import List from '../components/List'
@@ -57,20 +58,29 @@ export default function Home() {
     }).then(({ data }) => {
       const { id } = data.data;
       sendEmail(id);
+      Cookies.set('lugarlivre', currentOwner.id);
     })
+  }
+
+  const getInfo = async () => {
+    const ownersResponse = await Axios(baseUrl + '/owners');
+    ownersResponse.data.data.forEach(owner => owner.value = owner.name)
+    const owners = ownersResponse.data.data
+    setOwners(owners)
+
+    const believersResponse = await Axios(baseUrl + '/believers');
+    const believers = believersResponse.data.data
+    setBelievers(believers)
+
+    const ownerCookieId = Cookies.get('lugarlivre')
+    const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
+    if (ownerCookie) setCurrentOwner(ownerCookie)
+    console.log(ownerCookie);
   }
 
 
   useEffect(() => {
-    Axios(baseUrl + '/owners')
-      .then(({ data }) => {
-        data.data.forEach(owner => owner.value = owner.name)
-        setOwners(data.data)
-      })
-    Axios(baseUrl + '/believers')
-      .then(({ data }) => {
-        setBelievers(data.data)
-      })
+    getInfo()
   }, []);
   return (
     <Main>
