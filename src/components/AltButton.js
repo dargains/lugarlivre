@@ -13,7 +13,9 @@ const BTN = styled.button`
   color: var(--m-01);
   padding: 8px 16px;
   border-radius: 4px;
-  margin: 0 5px;
+  margin: 0 auto;
+  max-width: 200px;
+  display: block;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
