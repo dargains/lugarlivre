@@ -7,17 +7,41 @@ import Button from '../components/Button'
 
 const AcceptScreen = () => {
   const baseUrl = 'http://myeverydayapps.com/public/_/items'
+  const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
   const [owner, setOwner] = useState({})
   const [loan, setLoan] = useState({})
+
+  const sendEmail = (owner, believer) => {
+    const data = JSON.stringify({
+      "fromName": "Lugar Livre",
+      "toEmail": owner.email,
+      "fromEmail": "lugar.livre@fullsix.pt",
+      "emailSubject": `[Lugar Livre] Oferta aceite`,
+      "emailMessage": `<div style="font-family: sans-serif;">
+      <p>Olá ${owner.name}, ${believer.name} acaba de aceitar um lugar de garagem!</p>
+      <p>Vai ter com ele/a para combinar coisas.</p>
+      </div>`
+    })
+
+    Axios.post(emailEndpoint, data)
+  }
   const getInfo = async id => {
     const loanResponse = await Axios(baseUrl + `/loans?filter[id][eq]=${id}`);
     const currentLoan = loanResponse.data.data[0];
     setLoan(currentLoan);
     const ownerId = currentLoan.owner_id;
+    const believerId = currentLoan.believer_id;
+
     const ownerResponse = await Axios(baseUrl + `/owners?filter[id][eq]=${ownerId}`);
     const currentOwner = ownerResponse.data.data[0];
     setOwner(currentOwner);
+
+    const believerResponse = await Axios(baseUrl + `/believers?filter[id][eq]=${believerId}`);
+    const currentbeliever = believerResponse.data.data[0];
+
+    sendEmail(currentOwner, currentbeliever)
   }
+
   useEffect(() => {
     const { search } = window.location;
     const id = parseInt(search.split('=')[1]);
@@ -28,7 +52,8 @@ const AcceptScreen = () => {
         status: 'accepted'
       }
     })
-  }, [])
+  }, []);
+
   return (
     <Container>
       <Title>Lugar livre</Title>
