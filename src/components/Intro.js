@@ -36,13 +36,13 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
     goToNext()
   }
   const goToNext = () => {
-    if (!currentOwner.name) {
-      document.querySelector('input').classList.add('error')
-      setShowError(true)
-    } else {
+    if (currentOwner.name) {
       document.querySelector('input').classList.remove('error')
       setShowError(false)
       handleNext()
+    } else {
+      document.querySelector('input').classList.add('error')
+      setShowError(true)
     }
   }
 

@@ -20,6 +20,7 @@ export default function Home() {
   const [chosenBeliever, setChosenBeliever] = useState({})
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
+  const [gotData, setData] = useState(false)
 
   const goToStep = newStep => {
     setStep(newStep)
@@ -68,14 +69,15 @@ export default function Home() {
     const owners = ownersResponse.data.data
     setOwners(owners)
 
+    const ownerCookieId = Cookies.get('lugarlivre')
+    const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
+    if (ownerCookie) setCurrentOwner(ownerCookie)
+
     const believersResponse = await Axios(baseUrl + '/believers');
     const believers = believersResponse.data.data
     setBelievers(believers)
 
-    const ownerCookieId = Cookies.get('lugarlivre')
-    const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
-    if (ownerCookie) setCurrentOwner(ownerCookie)
-    console.log(ownerCookie);
+    setData(true)
   }
 
 
@@ -86,7 +88,7 @@ export default function Home() {
     <Main>
       {/* STEP 1 */}
       {
-        step === 1 &&
+        step === 1 && gotData &&
         <Intro
           owners={owners}
           currentOwner={currentOwner}
