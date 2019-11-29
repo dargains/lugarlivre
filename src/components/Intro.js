@@ -15,7 +15,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
   const [focusedInput, setFocus] = useState(null)
   const [calendarOpened, setCalendarOpen] = useState(false)
   const [value, setValue] = useState(currentOwner.name)
-  const [day, setDay] = useState('')
+  const [showError, setShowError] = useState(false)
   const today = moment();
   const tomorrow = moment().add(1, 'day');
   const isToday = today.isSame(startDate, 'd') && today.isSame(endDate, 'd')
@@ -26,7 +26,6 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
     handleEndDateChange(endDate)
   }
   const setDate = day => {
-    setDay(day)
     if (day === 'today') {
       handleStartDateChange(moment())
       handleEndDateChange(moment())
@@ -34,19 +33,20 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       handleStartDateChange(moment().add(1, 'day'))
       handleEndDateChange(moment().add(1, 'day'))
     }
+    goToNext()
   }
   const goToNext = () => {
     if (!currentOwner.name) {
       document.querySelector('input').classList.add('error')
+      setShowError(true)
+    } else {
+      document.querySelector('input').classList.remove('error')
+      setShowError(false)
+      handleNext()
     }
-    if (!startDate || !endDate) {
-      console.log('falta date');
-    }
-    else handleNext()
   }
 
   useEffect(() => {
-
     if (startDate && endDate && !isToday && !isTomorrow) setCalendarOpen(true)
   }, [])
 
@@ -58,7 +58,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
         items={owners}
         inputProps={{
           placeholder: 'Nome',
-          onFocus: ({ target }) => { target.classList.remove('error') }
+          onFocus: ({ target }) => { target.classList.remove('error'); setShowError(false) }
         }}
         shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
         getItemValue={item => item.name}
@@ -92,22 +92,25 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       <br /><br />
       {
         calendarOpened
-          ? <DateRangePicker
-            startDate={startDate}
-            startDateId="startDate"
-            endDate={endDate}
-            endDateId="endDate"
-            numberOfMonths={1}
-            minimumNights={0}
-            small={true}
-            minDate={moment()}
-            maxDate={moment().add(10, 'days')}
-            onDatesChange={handleDateChange}
-            focusedInput={focusedInput}
-            onFocusChange={input => setFocus(input)}
-            startDatePlaceholderText="Data início"
-            endDatePlaceholderText="Data fim"
-          />
+          ? <>
+            <DateRangePicker
+              startDate={startDate}
+              startDateId="startDate"
+              endDate={endDate}
+              endDateId="endDate"
+              numberOfMonths={1}
+              minimumNights={0}
+              small={true}
+              minDate={moment()}
+              maxDate={moment().add(10, 'days')}
+              onDatesChange={handleDateChange}
+              focusedInput={focusedInput}
+              onFocusChange={input => setFocus(input)}
+              startDatePlaceholderText="Data início"
+              endDatePlaceholderText="Data fim"
+            />
+            <Button handleClick={goToNext}>Continuar</Button>
+          </>
           : <>
             <AltButton handleClick={() => setDate('today')} isActive={isToday}>hoje</AltButton>
             <AltButton handleClick={() => setDate('tomorrow')} isActive={isTomorrow}>amanhã</AltButton>
@@ -115,7 +118,9 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
           </>
       }
       <br /><br />
-      <Button handleClick={goToNext}>Continuar</Button>
+
+      <Error className={showError ? 'show' : ''}>Falta dizer quem és</Error>
+
       <div style={{ marginTop: '60px' }}>
         <Body>Não toleramos desculpas</Body>
         <Body><span>Faz-te esperto!</span></Body>
@@ -133,6 +138,7 @@ const Container = styled.article`
     border-radius: 4px;
     font-size: 1.2em;
     color: var(--neu-05);
+    transition: all .2s ease;
     &::placeholder {
       color: var(--neu-04);
     }
@@ -161,6 +167,16 @@ const Body = styled.p`
   span {
     color: var(--m-01);
     font-weight: bold;
+  }
+`;
+
+const Error = styled.span`
+  opacity: 0;
+  color: var(--m-02);
+  font-size: 0.8em;
+  transition: opacity .2s ease;
+  &.show {
+    opacity: 1;
   }
 `;
 

@@ -1,25 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import PersonCard from './PersonCard'
 import Button from './Button'
+import AltButton from './AltButton'
 
 const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, handleBack }) => {
+  const [showError, setShowError] = useState(false)
   const isChosen = id => chosenBeliever?.id === id
+  const choosePerson = id => {
+    setShowError(false)
+    handleBelieverChange(id)
+    handleNext();
+  }
   const chooseRandom = () => {
     const randomId = believers[Math.floor(Math.random() * believers.length)];
-    handleBelieverChange(randomId.id)
+    choosePerson(randomId.id)
   }
   return (
     <Container>
       <Subtitle>Partilha o teu lugar de estacionamento</Subtitle>
       <PersonList>
-        {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={handleBelieverChange} isChosen={isChosen(card.id)} />)}
+        {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={choosePerson} isChosen={isChosen(card.id)} />)}
       </PersonList>
+
+      <Error className={showError ? 'show' : ''}>Falta escolher a pessoa</Error>
+
       <Button handleClick={chooseRandom}>Random</Button>
-      <Button handleClick={handleNext}>Continuar</Button>
-      <Button handleClick={handleBack}>Voltar</Button>
+      {/* <Button handleClick={goToNext}>Continuar</Button> */}
+      <AltButton handleClick={handleBack}>Voltar</AltButton>
     </Container>
   )
 }
@@ -42,6 +52,16 @@ const PersonList = styled.ul`
   column-gap: 20px;
   row-gap: 20px;
   list-style: none;
+`;
+
+const Error = styled.span`
+  opacity: 0;
+  color: var(--m-02);
+  font-size: 0.8em;
+  transition: opacity .2s ease;
+  &.show {
+    opacity: 1;
+  }
 `;
 
 PersonList.propTypes = {
