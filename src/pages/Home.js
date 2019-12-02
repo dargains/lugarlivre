@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import styled from 'styled-components'
 import Cookies from 'js-cookie'
+import moment from 'moment'
 
+import Loading from '../components/Loading'
 import Intro from '../components/Intro'
 import List from '../components/List'
 import Confirmation from '../components/Confirmation'
-import moment from 'moment'
+import Final from '../components/Final'
 
 export default function Home() {
   const baseUrl = 'http://myeverydayapps.com/public/_/items'
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
 
   const [owners, setOwners] = useState([])
   const [believers, setBelievers] = useState([])
@@ -20,7 +22,6 @@ export default function Home() {
   const [chosenBeliever, setChosenBeliever] = useState({})
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
-  const [gotData, setData] = useState(false)
 
   const goToStep = newStep => {
     setStep(newStep)
@@ -49,46 +50,52 @@ export default function Home() {
     Axios.post(emailEndpoint, data)
   }
 
-  const confirmLend = () => {
+  const confirmLend = async () => {
 
-    Axios.post(baseUrl + '/loans', {
+    const loansResponse = await Axios.post(baseUrl + '/loans', {
       owner_id: currentOwner.id,
       believer_id: chosenBeliever.id,
       start: moment(startDate).format('YYYY-MM-DD'),
       end: moment(endDate).format('YYYY-MM-DD')
-    }).then(({ data }) => {
-      const { id } = data.data;
-      sendEmail(id);
-      Cookies.set('lugarlivre', currentOwner.id);
     })
+    const { id } = loansResponse.data.data;
+    sendEmail(id);
+    Cookies.set('lugarlivre', currentOwner.id);
+    setStep(4)
   }
 
   const getInfo = async () => {
-    const ownersResponse = await Axios(baseUrl + '/owners');
+    const ownersResponse = await Axios(baseUrl + '/owners')
     ownersResponse.data.data.forEach(owner => owner.value = owner.name)
     const owners = ownersResponse.data.data
     setOwners(owners)
+
+    const believersResponse = await Axios(baseUrl + '/believers')
+    const believers = believersResponse.data.data
+    setBelievers(believers)
 
     const ownerCookieId = Cookies.get('lugarlivre')
     const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
     if (ownerCookie) setCurrentOwner(ownerCookie)
 
-    const believersResponse = await Axios(baseUrl + '/believers');
-    const believers = believersResponse.data.data
-    setBelievers(believers)
-
-    setData(true)
+    setStep(1)
   }
-
 
   useEffect(() => {
     getInfo()
   }, []);
+
   return (
     <Main>
+      {/* LOADING */}
+      {
+        step === 0 &&
+        <Loading />
+      }
+
       {/* STEP 1 */}
       {
-        step === 1 && gotData &&
+        step === 1 &&
         <Intro
           owners={owners}
           currentOwner={currentOwner}
@@ -121,9 +128,19 @@ export default function Home() {
           chosenBeliever={chosenBeliever}
           startDate={startDate}
           endDate={endDate}
-          step={step}
           handleConfirmation={confirmLend}
           handleBack={() => goToStep(2)}
+        />
+      }
+
+      {/* FINAL */}
+      {
+        step === 4 &&
+        <Final
+          currentOwner={currentOwner}
+          chosenBeliever={chosenBeliever}
+          startDate={startDate}
+          endDate={endDate}
         />
       }
     </Main>
