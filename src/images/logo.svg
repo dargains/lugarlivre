@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="45px" viewBox="0 0 38 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 60.1 (101010) - https://sketch.com -->
+    <title>428C3AE7-69BC-41C1-BC1D-70471A3A0616</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="85.2100347%" y1="0%" x2="14.7899653%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FCD269" offset="0%"></stop>
+            <stop stop-color="#FDC862" offset="20%"></stop>
+            <stop stop-color="#FEBF5B" offset="40%"></stop>
+            <stop stop-color="#FFB554" offset="60%"></stop>
+            <stop stop-color="#FFAB4E" offset="80%"></stop>
+            <stop stop-color="#FFA147" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="001" transform="translate(-169.000000, -90.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="Group" transform="translate(169.000000, 90.000000)">
+                <path d="M7.95,0 L7.949,37.05 L26.5,37.05 L26.5,45 L7.949,44.999 L7.95,45 L0,45 L0,0 L7.95,0 Z M37.7625,45 L29.8125,45 L29.812,7.95 L11.2625,7.95 L11.2625,-4.4408921e-15 L37.7625,-8.8817842e-16 L37.7625,45 Z" id="Combined-Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
