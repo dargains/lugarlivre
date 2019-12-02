@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import Axios from 'axios'
 import moment from 'moment'
 
-import Button from '../components/Button'
+import logo from '../images/logo.svg'
 
 const Final = ({ currentOwner, chosenBeliever, startDate, endDate }) => {
   const [startDateString, setStartDateString] = useState('')
@@ -18,6 +17,9 @@ const Final = ({ currentOwner, chosenBeliever, startDate, endDate }) => {
 
   return (
     <Container>
+      <Logo>
+        <img src={logo} alt="Lugar Livre" />
+      </Logo>
       <Title>Lugar livre</Title>
       <Subtitle>Obrigado, {currentOwner.name}!</Subtitle>
       <Body>{chosenBeliever.name} já não precisa mais deixar o carro no Oeiras Parque.</Body>
@@ -55,6 +57,10 @@ const Body = styled.p`
   font-size: 1em;
   margin-bottom: 10px;
   line-height: 1.2em;
+`;
+const Logo = styled.figure`
+  max-width: 40px;
+  margin: 0 auto 12px;
 `;
 
 export default Final
