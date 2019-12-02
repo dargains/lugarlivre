@@ -5,9 +5,11 @@ import Button from '../components/Button'
 import AltButton from './AltButton'
 
 const Confirmation = ({ currentOwner, chosenBeliever, startDate, endDate, handleConfirmation, handleBack }) => {
+
   const isSame = moment(startDate).isSame(endDate)
   const startDateString = moment(startDate).isSame(endDate, 'year') ? moment(startDate).isSame(endDate, 'month') ? moment(startDate).format('DD') : moment(startDate).format('DD [de] MMMM') : moment(startDate).format('DD [de] MMMM [de] YYYY');
-  const endDateString = moment(endDate).format("DD [de] MMMM [de] YYYY")
+  const endDateString = moment(endDate).format("DD [de] MMMM [de] YYYY");
+
   return (
     <article>
       <h2>Confirme a escolha</h2>
