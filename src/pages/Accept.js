@@ -68,8 +68,8 @@ const AcceptScreen = () => {
       <Body>Tens um lugar reservado para ti.</Body>
       <Box>
         <Body>{isSameDay ? `${endDateString}` : `De ${startDateString} a ${endDateString}`}.</Body>
-        <Body>Edificio <span>{owner?.building}</span></Body>
-        <Body><span>{owner?.spot}</span></Body>
+        <Body>Edificio {owner?.building}</Body>
+        <Body>{owner?.spot}</Body>
       </Box>
       <Button>Guardar</Button>
     </Container >
@@ -85,25 +85,22 @@ const Container = styled.main`
   box-shadow: 0 0 30px rgba(0,0,0,.2);
   text-align: center;
 `;
-const Box = styled.main`
-  margin-bottom: 40px;
+const Box = styled.div`
+  margin: 20px 0 60px;
 `;
 
 const Title = styled.h1`
-  font-size: 2em;
+  font-size: 1.5em;
   margin-bottom: 40px;
 `;
 const Subtitle = styled.h2`
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin-bottom: 20px;
 `;
 const Body = styled.p`
   font-size: 1em;
   margin-bottom: 10px;
   line-height: 1.2em;
-  span {
-    color: var(--m-01);
-  }
 `;
 
 export default AcceptScreen
