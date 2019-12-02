@@ -20,7 +20,6 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
   }
   return (
     <Container>
-      <Subtitle>Partilha o teu lugar de estacionamento</Subtitle>
       <PersonList>
         {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={choosePerson} isChosen={isChosen(card.id)} />)}
       </PersonList>
@@ -36,12 +35,6 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
 
 const Container = styled.article`
   text-align: center;
-`;
-
-const Subtitle = styled.h2`
-  margin: 20px 0 80px;
-  font-size: 18px;
-  font-weight: normal;
 `;
 
 const PersonList = styled.ul`
