@@ -1,7 +1,7 @@
 import React from 'react'
 
 const styles = {
-  color: '#484D5A',
+  color: 'var(--neu-06)',
   fontSize: '20px',
   fontWeight: 'bold',
   lineGeight: '27px',
