@@ -8,25 +8,31 @@ const PersonCard = ({ id, name, department, isChosen, handleBelieverChange }) =>
     handleBelieverChange(id)
   }
   return (
-    <Card onClick={handleClick} className={`${isChosen ? 'selected' : ''}`}>
+    <Card onClick={handleClick} className={`${isChosen ? 'selected swiper-slide' : 'swiper-slide'}`}>
       <Title>{name}</Title>
-      <p>{department}</p>
+      <Subtitle>{department}</Subtitle>
     </Card>
   )
 }
-const Card = styled.li`
-  padding: 20px;
-  box-shadow: 2px 2px 20px rgba(0,0,0,.2);
-  border-radius: 5px;
+const Card = styled.article`
   cursor: pointer;
+  padding: 60px 16px;
+  border-radius: 7px;
   text-align: left;
-  &.selected {
-    background-color: #ededed;
-  }
+	background: linear-gradient(225deg, #FCD269 0%, #FDC862 20%, #FEBF5B 40%, #FFB554 60%, #FFAB4E 80%, #FFA147 100%);
 `;
 const Title = styled.h2`
-  font-size: 1.2em;
-  margin-bottom: 10px;
+  color: var(--neu-01);
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -0.67px;
+  line-height: 27px;
+`;
+const Subtitle = styled.h3`
+  color: var(--neu-01);
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: normal;
 `;
 
 PersonCard.propTypes = {
