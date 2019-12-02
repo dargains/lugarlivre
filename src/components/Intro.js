@@ -72,7 +72,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
           renderItem={(item, highlighted) =>
             <div
               key={item.id}
-              style={{ backgroundColor: highlighted ? '#eee' : 'transparent', padding: '5px 20px', color: 'var(--neu-05)' }}
+              style={{ backgroundColor: highlighted ? '#eee' : 'transparent', padding: '5px 20px', color: 'var(--neu-06)' }}
             >
               {item.name}
             </div>
@@ -145,7 +145,7 @@ const Container = styled.article`
     text-align: left;
     padding: 18px 0;
     font-size: 1.2em;
-    color: var(--neu-05);
+    color: var(--neu-06);
     transition: all .2s ease;
     border: 0;
     &::placeholder {
@@ -206,7 +206,7 @@ const Subtitle = styled.h2`
   margin: 20px 0 80px;
   font-size: 18px;
   font-weight: normal;
-  color: var(--neu-05);
+  color: var(--neu-06);
 `;
 
 const Body = styled.p`
