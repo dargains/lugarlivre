@@ -9,10 +9,11 @@ import moment from 'moment';
 import 'moment/locale/pt'
 
 import Title from '../components/Title'
+import ButtonContainer from '../components/ButtonContainer'
 import Button from '../components/Button'
 import AltButton from '../components/AltButton'
 
-import logo from '../images/logo.svg'
+import logo from '../images/Logo.svg'
 
 const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext }) => {
   const [focusedInput, setFocus] = useState(null)
@@ -55,9 +56,9 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
 
   return (
     <Container>
-      <Logo>
+      <LogoComp>
         <img src={logo} alt="Lugar Livre" />
-      </Logo>
+      </LogoComp>
       <Title>Lugar Livre</Title>
       <Subtitle>Partilha o teu lugar de estacionamento</Subtitle>
       <div className="autocomplete">
@@ -121,20 +122,13 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
             />
             <Button handleClick={goToNext}>Continuar</Button>
           </>
-          : <>
-            <Button handleClick={() => setDate('today')} isActive={isToday}>hoje</Button>
+          : <ButtonContainer>
+            <Button primary handleClick={() => setDate('today')} isActive={isToday}>hoje</Button>
             <Button handleClick={() => setDate('tomorrow')} isActive={isTomorrow}>amanhã</Button>
             <AltButton handleClick={() => setCalendarOpen(true)}>outros dias</AltButton>
-          </>
+          </ButtonContainer>
       }
-      <br /><br />
-
       <Error className={showError ? 'show' : ''}>Falta dizer quem és</Error>
-
-      <div style={{ marginTop: '60px' }}>
-        <Body>Não toleramos desculpas</Body>
-        <Body><span>Faz-te esperto!</span></Body>
-      </div>
     </Container>
   );
 }
@@ -207,16 +201,8 @@ const Subtitle = styled.h2`
   font-size: 18px;
   font-weight: normal;
   color: var(--neu-06);
-`;
-
-const Body = styled.p`
-  font-size: 14px;
-  line-height: 20px;
-  margin: 2px auto;
-  span {
-    color: var(--m-01);
-    font-weight: bold;
-  }
+  max-width: 260px;
+  margin: 20px auto;
 `;
 
 const Error = styled.span`
@@ -229,7 +215,7 @@ const Error = styled.span`
   }
 `;
 
-const Logo = styled.figure`
+const LogoComp = styled.figure`
   max-width: 40px;
   margin: 0 auto 12px;
 `;
