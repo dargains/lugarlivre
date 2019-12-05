@@ -137,7 +137,7 @@ const Container = styled.article`
   text-align: center;
   input {
     text-align: left;
-    padding: 18px 0;
+    padding: 16px;
     font-size: 1.2em;
     color: var(--neu-06);
     transition: all .2s ease;
