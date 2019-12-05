@@ -86,7 +86,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Main>
+    <>
       {/* LOADING */}
       {
         step === 0 &&
@@ -128,6 +128,7 @@ export default function Home() {
           chosenBeliever={chosenBeliever}
           startDate={startDate}
           endDate={endDate}
+          believers={believers}
           handleConfirmation={confirmLend}
           handleBack={() => goToStep(2)}
         />
@@ -143,12 +144,6 @@ export default function Home() {
           endDate={endDate}
         />
       }
-    </Main>
+    </>
   )
 }
-
-const Main = styled.div`
-  margin: 0 auto;
-  max-width: 800px;
-  width: 100%;
-`
