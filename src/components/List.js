@@ -31,11 +31,8 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
       if (index !== i) return // We're only interested in changing spring-data for the current spring
       const isGone = gone.has(index)
       if (down) {
-        console.log(timer);
         timer = setTimeout(() => {
-          console.log('over')
           if (!gone.has(index)) {
-            console.log({ isGone, trigger, down, index, i })
             scale = 1.3
             setChosen(i)
             setTimeout(() => {
@@ -44,12 +41,10 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
           }
         }, 800)
       } else {
-        console.log('clear');
         clearTimeout(timer)
         timer = null;
       }
       if (isGone) {
-        console.log('isGone clear')
         clearTimeout(timer)
         timer = null;
       }
