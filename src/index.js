@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import './reset.css';
+import './index.css';
+import './animations.css';
 import 'react-dates/initialize';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
