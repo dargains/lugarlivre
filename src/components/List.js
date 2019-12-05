@@ -12,12 +12,16 @@ import AltButton from './AltButton'
 const to = i => ({ x: 0, y: i * -4, scale: 1, rot: -10 + Math.random() * 20, delay: i * 100 })
 const from = i => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
-const trans = (r, s) => `perspective(3000px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
+const trans = (r, s) => `perspective(0) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, handleBack }) => {
   const [showError, setShowError] = useState(false)
   const [gone] = useState(() => new Set())
+  const [chosen, setChosen] = useState(null)
+
   const [props, set] = useSprings(believers.length, i => ({ ...to(i), from: from(i) }))
+
+  var timer = null;
 
   const bind = useDrag(({ args: [index], down, movement: [mx], distance, direction: [xDir], velocity }) => {
     const trigger = velocity > 0.2 // If you flick hard enough it should trigger the card to fly out
@@ -26,18 +30,35 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
     set(i => {
       if (index !== i) return // We're only interested in changing spring-data for the current spring
       const isGone = gone.has(index)
+      if (down) {
+        console.log(timer);
+        timer = setTimeout(() => {
+          console.log('over')
+          if (!gone.has(index)) {
+            console.log({ isGone, trigger, down, index, i })
+            scale = 1.3
+            setChosen(i)
+            setTimeout(() => {
+              choosePerson(believers[i].id)
+            }, 800)
+          }
+        }, 800)
+      } else {
+        console.log('clear');
+        clearTimeout(timer)
+        timer = null;
+      }
+      if (isGone) {
+        console.log('isGone clear')
+        clearTimeout(timer)
+        timer = null;
+      }
       const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
       const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0) // How much the card tilts, flicking it harder makes it rotate faster
       let scale = down ? 1.1 : 1 // Active cards lift up a bit
-      if (!down && !trigger) {
-        scale = 1.3
-        setTimeout(() => {
-          choosePerson(believers[i].id)
-        }, 1000)
-      }
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
     })
-    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
+    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 850)
   })
 
   // const isChosen = id => chosenBeliever?.id === id
@@ -56,20 +77,21 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
   return (
     <Container>
       <SliderContainer>
-        {/* {believers.map(card => <PersonCard key={card.id} {...card} handleBelieverChange={choosePerson} isChosen={isChosen(card.id)} />)} */}
         {props.map(({ x, y, rot, scale }, i) => (
           <animated.article key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-            {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
             <AnimatedPersonCard
               {...bind(i)}
 
               style={{
                 transform: interpolate([rot, scale], trans),
-                backgroundColor: `var(--m-0${i + 1})`
+                color: `var(--m-0${i + 1})`
               }}
+              className={`${chosen === i ? 'opened' : ''}`}
             >
+              <span></span>
               <Title>{believers[i].name}</Title>
               <Subtitle>{believers[i].department}</Subtitle>
+              <span></span>
             </AnimatedPersonCard>
           </animated.article>
         ))}
@@ -104,33 +126,95 @@ height: 60vh;
 `;
 const PersonCard = styled.div`
   cursor: pointer;
-  padding: 60px 16px;
+  padding: 60px 48px;
   border-radius: 7px;
-  text-align: left;
-  /* background-color: lightblue; */
-  background-size: auto 85%;
-  background-repeat: no-repeat;
-  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 45vh;
   max-width: 300px;
-  height: 50vh;
+  height: 100%;
   max-height: 570px;
   will-change: transform;
   border-radius: 10px;
+  background-color: currentColor;
+  &:before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    transition: transform .3s ease-in-out;
+    transform: scale(1);
+  }
+  &.opened {
+    &:before {
+    transform: scale(3);
+    }
+    span:nth-of-type(1) {
+      animation: closeTopRightBracket .4s cubic-bezier(1, 0, 0, 1) .2s forwards;
+    }
+    span:nth-of-type(2){
+      animation: closeBottomLeftBracket .4s cubic-bezier(1, 0, 0, 1) .2s forwards;
+    }
+    h2,h3 {
+      animation: fadeOut .2s ease-in .2s forwards;
+    }
+  }
+  }
+  span:nth-of-type(1),
+  span:nth-of-type(2) {
+    position: absolute;
+    width: 24px;
+    height: 48px;
+    top: 50%;
+    left: 50%;
+    &:before,
+    &:after {
+      content: '';
+      background-color: var(--neu-01);
+      position: absolute;
+    }
+    &:before {
+      width: 8px;
+      height: 100%;
+    }
+    &:after {
+      width: 100%;
+      height: 8px;
+    }
+  }
+  span:nth-of-type(1) {
+    transform: translate3d(350%,-250%,0);
+    &:before,
+    &:after {
+      top: 0;
+      right: 0;
+    }
+  }
+  span:nth-of-type(2) {
+    transform: translate3d(-450%,150%,0);
+    &:before,
+    &:after {
+      bottom: 0;
+      left: 0;
+    }
+  }
 `;
 const Title = styled.h2`
   color: var(--neu-01);
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: -0.67px;
-  line-height: 27px;
-  margin-bottom: 24px;
+  font-size: 38px;
+  line-height: 44px;
+  font-weight: 300;
+  letter-spacing: -1.27px;
+  margin-bottom: 8px;
 `;
 const Subtitle = styled.h3`
   color: var(--neu-01);
   font-size: 16px;
   line-height: 22px;
-  font-weight: normal;
+  font-weight: 400;
 `;
 const Error = styled.span`
   opacity: 0;
