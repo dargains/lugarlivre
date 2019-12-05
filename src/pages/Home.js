@@ -124,7 +124,6 @@ export default function Home() {
       {
         step === 3 &&
         <Confirmation
-          currentOwner={currentOwner}
           chosenBeliever={chosenBeliever}
           startDate={startDate}
           endDate={endDate}
