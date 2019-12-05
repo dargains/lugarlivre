@@ -28,4 +28,5 @@ main > article {
   overflow-x: hidden;
   padding: 48px 28px;
   height: 100%;
+  width: 100%;
 }
