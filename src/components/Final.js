@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
-import logo from '../images/logo.svg'
+import logo from '../images/Logo.svg'
 
 const Final = ({ currentOwner, chosenBeliever, startDate, endDate }) => {
   const [startDateString, setStartDateString] = useState('')
