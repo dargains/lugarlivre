@@ -1,6 +1,9 @@
 :root {
-  --m-01: #f9c653;
-  --m-02: #f6334f;
+  --m-01: #c5c9e6;
+  --m-02: #b6e3eb;
+  --m-03: #dcecc8;
+  --m-04: #fbcbbd;
+  --m-05: #f8bbcf;
   --neu-01: #ffffff;
   --neu-02: #f8f8f8;
   --neu-03: #f1f2f6;
@@ -16,5 +19,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 main {
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+}
+main > article {
+  overflow-x: hidden;
   padding: 48px 28px;
+  height: 100%;
 }
