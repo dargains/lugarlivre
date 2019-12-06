@@ -102,7 +102,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
   )
 }
 
-const Container = styled.article`
+const Container = styled.section`
   text-align: center;
 `;
 

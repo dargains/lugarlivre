@@ -133,7 +133,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
   );
 }
 
-const Container = styled.article`
+const Container = styled.section`
   text-align: center;
   input {
     text-align: left;

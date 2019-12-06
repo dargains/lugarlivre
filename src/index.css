@@ -24,7 +24,7 @@ main {
   max-width: 800px;
   width: 100%;
 }
-main > article {
+main > section {
   overflow-x: hidden;
   padding: 48px 28px;
   height: 100%;

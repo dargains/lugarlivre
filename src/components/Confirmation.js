@@ -14,7 +14,7 @@ const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleCon
   const backColor = believers.indexOf(chosenBeliever) + 1
 
   return (
-    <article style={{ backgroundColor: `var(--m-0${backColor})` }}>
+    <section style={{ backgroundColor: `var(--m-0${backColor})` }}>
       <Body>
         <span></span>
         <p>O seu lugar está livre <strong>{isSame ? `em ${startDate.format("DD [de] MMMM [de] YYYY")}` : `de ${startDateString} a ${endDateString}`}</strong> e será partilhado com {chosenBeliever.name}</p>
@@ -24,7 +24,7 @@ const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleCon
         <Button white color={backColor} handleClick={handleConfirmation}>Confirmar</Button>
         <AltButton white handleClick={handleBack}>Voltar</AltButton>
       </ButtonContainer>
-    </article>
+    </section>
   )
 }
 
