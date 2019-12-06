@@ -125,7 +125,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
           : <ButtonContainer>
             <Button primary handleClick={() => setDate('today')} isActive={isToday}>hoje</Button>
             <Button handleClick={() => setDate('tomorrow')} isActive={isTomorrow}>amanhã</Button>
-            <AltButton handleClick={() => setCalendarOpen(true)}>outros dias</AltButton>
+            <AltButton handleClick={() => setCalendarOpen(true)} icon="date_range" />
           </ButtonContainer>
       }
       <Error className={showError ? 'show' : ''}>Falta dizer quem és</Error>

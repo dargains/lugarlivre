@@ -96,7 +96,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
       <ButtonContainer>
         {/* <Button handleClick={chooseRandom}>Aleatório</Button> */}
         {/* <Button handleClick={goToNext}>Continuar</Button> */}
-        <AltButton handleClick={handleBack}>Voltar</AltButton>
+        <AltButton handleClick={handleBack} icon="arrow_back" />
       </ButtonContainer>
     </Container >
   )
@@ -121,6 +121,7 @@ height: 60vh;
 `;
 const PersonCard = styled.div`
   cursor: pointer;
+  user-select: none;
   padding: 60px 48px;
   border-radius: 7px;
   display: flex;
@@ -142,6 +143,7 @@ const PersonCard = styled.div`
     background-color: currentColor;
     transition: transform .3s ease-in-out;
     transform: scale(1);
+    pointer-events: none;
   }
   &.opened {
     &:before {
@@ -165,6 +167,7 @@ const PersonCard = styled.div`
     height: 48px;
     top: 50%;
     left: 50%;
+    pointer-events: none;
     &:before,
     &:after {
       content: '';
@@ -204,12 +207,14 @@ const Title = styled.h2`
   font-weight: 300;
   letter-spacing: -1.27px;
   margin-bottom: 8px;
+  pointer-events: none;
 `;
 const Subtitle = styled.h3`
   color: var(--neu-01);
   font-size: 16px;
   line-height: 22px;
   font-weight: 400;
+  pointer-events: none;
 `;
 const Error = styled.span`
   opacity: 0;
