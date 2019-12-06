@@ -15,6 +15,7 @@ export default function Home() {
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
 
   const [step, setStep] = useState(0)
+  const [hasData, setData] = useState(false)
 
   const [owners, setOwners] = useState([])
   const [believers, setBelievers] = useState([])
@@ -78,7 +79,11 @@ export default function Home() {
     const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
     if (ownerCookie) setCurrentOwner(ownerCookie)
 
-    setStep(1)
+    setData(true)
+    setTimeout(() => {
+      setStep(1)
+
+    }, 1000)
   }
 
   useEffect(() => {
