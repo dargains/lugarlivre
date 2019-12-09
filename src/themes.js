@@ -4,6 +4,6 @@ export const lightTheme = {
 }
 
 export const darkTheme = {
-  background: 'var(--neu-01)',
-  text: 'var(--neu-06)',
+  background: 'var(--neu-06)',
+  text: 'var(--neu-01)',
 }

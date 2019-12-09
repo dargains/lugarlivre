@@ -10,11 +10,11 @@ import Refuse from './pages/Refuse'
 import Error from './pages/Error'
 
 const App = () => {
-
+  const height = window.innerHeight
   return (
     <ThemeProvider theme={lightTheme}>
       <Router>
-        <main className="App">
+        <main className="App" style={{ height }}>
           {/* <Header /> */}
           <Switch>
             <Route path="/accept">
