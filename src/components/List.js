@@ -5,6 +5,7 @@ import { useSprings, animated, to as interpolate } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 
 // import PersonCard from './PersonCard'
+import Container from './Container'
 import ButtonContainer from './ButtonContainer'
 import AltButton from './AltButton'
 
@@ -39,7 +40,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
               choosePerson(believers[i].id)
             }, 800)
           }
-        }, 800)
+        }, 300)
       } else {
         clearTimeout(timer)
         timer = null;
@@ -53,7 +54,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
       let scale = down ? 1.1 : 1 // Active cards lift up a bit
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
     })
-    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 850)
+    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 400)
   })
 
   // const isChosen = id => chosenBeliever?.id === id
@@ -70,7 +71,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
   const AnimatedPersonCard = animated(PersonCard)
 
   return (
-    <Container>
+    <Container style={{ textAlign: 'center' }}>
       <SliderContainer>
         {props.map(({ x, y, rot, scale }, i) => (
           <animated.article key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
@@ -79,7 +80,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
 
               style={{
                 transform: interpolate([rot, scale], trans),
-                color: `var(--m-0${i + 1})`
+                color: `var(--m-0${i % 5 + 1})`
               }}
               className={`${chosen === i ? 'opened' : ''}`}
             >
@@ -101,10 +102,6 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
     </Container >
   )
 }
-
-const Container = styled.section`
-  text-align: center;
-`;
 
 const SliderContainer = styled.div`
 height: 60vh;
@@ -141,7 +138,7 @@ const PersonCard = styled.div`
     width: 100%;
     height: 100%;
     background-color: currentColor;
-    transition: transform .3s ease-in-out;
+    transition: transform .3s ease-in-out 0.8s;
     transform: scale(1);
     pointer-events: none;
   }
