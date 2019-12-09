@@ -1,20 +1,21 @@
 import React from 'react'
-
-const styles = {
-  color: 'var(--neu-06)',
-  fontSize: '20px',
-  fontWeight: 'bold',
-  lineGeight: '27px',
-  textAlign: 'center',
-  textTransform: 'uppercase'
-}
+import styled from 'styled-components'
 
 function Title() {
   return (
-    <h1 style={styles}>
+    <H1>
       Lugar Livre
-    </h1>
+    </H1>
   )
 }
+
+const H1 = styled.h1`
+  color: ${props => props.theme.text};
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 27px;
+  text-align: center;
+  text-transform: uppercase;
+`;
 
 export default Title
