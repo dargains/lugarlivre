@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Container from './Container'
 import Title from './Title'
 import logo from '../images/Logo.svg'
 
@@ -15,10 +16,6 @@ const Loading = () => {
     </Container>
   )
 }
-
-const Container = styled.section`
-  text-align: center;
-`;
 
 const LogoComp = styled.figure`
   max-width: 40px;
