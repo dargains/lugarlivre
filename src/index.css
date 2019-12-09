@@ -1,15 +1,15 @@
 :root {
   --m-01: #c5c9e6;
   --m-02: #b6e3eb;
-  --m-03: #dcecc8;
+  --m-03: #d3e7ba;
   --m-04: #fbcbbd;
   --m-05: #f8bbcf;
   --neu-01: #ffffff;
-  --neu-02: #f8f8f8;
-  --neu-03: #f1f2f6;
-  --neu-04: #c4c6cd;
-  --neu-05: #989ba5;
-  --neu-06: #484d5a;
+  --neu-02: #eef2fd;
+  --neu-03: #ced3e1;
+  --neu-04: #9fa5b8;
+  --neu-05: #7a8197;
+  --neu-06: #565f77;
 }
 
 body {
@@ -19,7 +19,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 main {
-  height: 100vh;
   margin: 0 auto;
   max-width: 800px;
   width: 100%;
@@ -29,4 +28,6 @@ main > section {
   padding: 48px 28px;
   height: 100%;
   width: 100%;
+
+  text-align: center;
 }
