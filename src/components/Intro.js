@@ -8,6 +8,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import 'moment/locale/pt'
 
+import Container from '../components/Container'
 import Title from '../components/Title'
 import ButtonContainer from '../components/ButtonContainer'
 import Button from '../components/Button'
@@ -61,7 +62,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       </LogoComp>
       <Title>Lugar Livre</Title>
       <Subtitle>Partilha o teu lugar de estacionamento</Subtitle>
-      <div className="autocomplete">
+      <AutoCompleteContainer>
         <ReactAutocomplete
           items={owners}
           inputProps={{
@@ -99,7 +100,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
         />
         <span className="border_tr" />
         <span className="border_bl" />
-      </div>
+      </AutoCompleteContainer>
 
       {
         calendarOpened
@@ -133,13 +134,15 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
   );
 }
 
-const Container = styled.section`
-  text-align: center;
+const AutoCompleteContainer = styled.section`
+  width: 260px;
+  margin: 60px auto;
   input {
     text-align: left;
     padding: 16px;
     font-size: 1.2em;
-    color: var(--neu-06);
+    color: ${props => props.theme.text};
+    background-color: ${props => props.theme.background};
     transition: all .2s ease;
     border: 0;
     &::placeholder {
@@ -150,10 +153,7 @@ const Container = styled.section`
       border-color: var(--m-02);
     }
   }
-  .autocomplete {
-    width: 260px;
-    margin: 60px auto;
-  }
+  
   .border_tr,
   .border_bl {
     left: 0;
@@ -164,7 +164,7 @@ const Container = styled.section`
     pointer-events: none;
     &:before,&:after {
       content: '';
-      background-color: var(--neu-03);
+      background-color: var(--neu-02);
       position: absolute;
     }
   }
@@ -200,7 +200,7 @@ const Subtitle = styled.h2`
   margin: 20px 0 80px;
   font-size: 18px;
   font-weight: normal;
-  color: var(--neu-06);
+  color: ${props => props.theme.text};
   max-width: 260px;
   margin: 20px auto;
 `;
