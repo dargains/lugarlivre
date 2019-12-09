@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
+import Container from '../components/Container'
 import ButtonContainer from '../components/ButtonContainer'
 import Button from '../components/Button'
 import AltButton from './AltButton'
@@ -9,22 +10,30 @@ import AltButton from './AltButton'
 const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleConfirmation, handleBack }) => {
 
   const isSame = moment(startDate).isSame(endDate)
-  const startDateString = moment(startDate).isSame(endDate, 'year') ? moment(startDate).isSame(endDate, 'month') ? moment(startDate).format('DD') : moment(startDate).format('DD [de] MMMM') : moment(startDate).format('DD [de] MMMM [de] YYYY');
-  const endDateString = moment(endDate).format("DD [de] MMMM [de] YYYY");
-  const backColor = believers.indexOf(chosenBeliever) + 1
+
+  const today = moment();
+  const tomorrow = moment().add(1, 'day');
+  const isToday = today.isSame(startDate, 'd') && today.isSame(endDate, 'd')
+  const isTomorrow = tomorrow.isSame(startDate, 'd') && tomorrow.isSame(endDate, 'd')
+
+  const startDateString = moment(startDate).isSame(endDate, 'year') ? moment(startDate).isSame(endDate, 'month') ? moment(startDate).format('DD') : moment(startDate).format('DD [de] MMMM') : moment(startDate).format('DD [de] MMMM [de] YYYY')
+
+  const endDateString = moment(endDate).format("DD [de] MMMM [de] YYYY")
+
+  const backColor = believers.indexOf(chosenBeliever) % 5 + 1
 
   return (
-    <section style={{ backgroundColor: `var(--m-0${backColor})` }}>
+    <Container backColor={`var(--m-0${backColor})`}>
       <Body>
         <span></span>
-        <p>O seu lugar está livre <strong>{isSame ? `em ${startDate.format("DD [de] MMMM [de] YYYY")}` : `de ${startDateString} a ${endDateString}`}</strong> e será partilhado com {chosenBeliever.name}</p>
+        <p>O seu lugar está livre <strong>{isToday ? 'hoje' : isTomorrow ? 'amanhã' : isSame ? `a ${startDate.format("DD [de] MMMM [de] YYYY")}` : `de ${startDateString} a ${endDateString}`}</strong> e será partilhado com <strong>{chosenBeliever.name}</strong></p>
         <span></span>
       </Body>
       <ButtonContainer>
         <Button white color={backColor} handleClick={handleConfirmation}>Confirmar</Button>
         <AltButton white handleClick={handleBack} icon="arrow_back" />
       </ButtonContainer>
-    </section>
+    </Container>
   )
 }
 
@@ -32,7 +41,7 @@ const Body = styled.div`
   max-width: 262px;
   margin: 0 auto;
   text-align: center;
-  padding: 60px 32px;
+  padding: 60px 24px;
   p {
     font-size: 24px;
     line-height: 36px;
