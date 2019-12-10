@@ -7,6 +7,7 @@
     "dynamics.js": "^1.1.5",
     "js-cookie": "^2.2.1",
     "moment": "^2.24.0",
+    "parallax-js": "^3.1.0",
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
     "react-dates": "^21.5.0",

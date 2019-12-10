@@ -1,66 +1,76 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import moment from 'moment'
+import Parallax from 'parallax-js'
 
-import logo from '../images/Logo.svg'
+import Container from './Container'
+import cloud1 from '../images/Cloud 01.svg'
+import cloud2 from '../images/Cloud 02.svg'
+import cloud3 from '../images/Cloud 03.svg'
 
-const Final = ({ currentOwner, chosenBeliever, startDate, endDate }) => {
-  const [startDateString, setStartDateString] = useState('')
-  const [endDateString, setEndDateString] = useState('')
-  const [isSameDay, setSameDay] = useState(false)
-
+const Final = () => {
   useEffect(() => {
-    setStartDateString(moment(startDate).isSame(endDate, 'year') ? moment(startDate).isSame(endDate, 'month') ? moment(startDate).format('DD') : moment(startDate).format('DD [de] MMMM') : moment(startDate).format('DD [de] MMMM [de] YYYY'));
-    setEndDateString(moment(endDate).format("DD [de] MMMM [de] YYYY"))
-    setSameDay(moment(startDate).isSame(endDate))
-  }, []);
-
+    var scene = document.querySelector('.scene');
+    new Parallax(scene);
+  }, [])
   return (
-    <Container>
-      <Logo>
-        <img src={logo} alt="Lugar Livre" />
-      </Logo>
-      <Title>Lugar livre</Title>
-      <Subtitle>Obrigado, {currentOwner.name}!</Subtitle>
-      <Body>{chosenBeliever.name} já não precisa mais deixar o carro no Oeiras Parque.</Body>
+    <Container backColor="var(--m-02)">
+      <ImageContainer className="scene">
+        <img src={cloud1} alt="cloud" data-depth="0.4" />
+        <img src={cloud2} alt="cloud" data-depth="0.8" />
+        <img src={cloud3} alt="cloud" data-depth="0.2" />
+      </ImageContainer>
       <Box>
-        <Body>{isSameDay ? `${endDateString}` : `De ${startDateString} a ${endDateString}`}</Body>
-        <Body>Edificio {currentOwner.building}</Body>
-        <Body>{currentOwner.spot}</Body>
+        <Subtitle>Obrigado!</Subtitle>
+        <Body>Acabaste de ganhar um lugar no céu</Body>
       </Box>
     </Container >
   )
 }
 
-const Container = styled.section`
-  width: 90%;
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 40px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0,0,0,.2);
-  text-align: center;
-`;
-const Box = styled.div`
-  margin-top: 40px;
+const Box = styled.article`
+  color: var(--neu-01);
+  font-size: 1.375em;
+  line-height: 36px;
+  max-width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  `;
+const ImageContainer = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  img {
+    
+    &:nth-of-type(1) {
+      width: 135px;
+      top: 20% !important;
+      left: 20% !important;
+    }
+    &:nth-of-type(2) {
+      width: 184px;
+      top: 50% !important;
+      left: 70% !important;
+    }
+    &:nth-of-type(3) {
+      width: 56px;
+      top: 70% !important;
+      left: 20% !important;
+    }
+  }
 `;
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  margin-bottom: 40px;
-`;
 const Subtitle = styled.h2`
-  font-size: 1.2em;
-  margin-bottom: 20px;
+  font-weight: 700;
 `;
 const Body = styled.p`
-  font-size: 1em;
   margin-bottom: 10px;
-  line-height: 1.2em;
-`;
-const Logo = styled.figure`
-  max-width: 40px;
-  margin: 0 auto 12px;
 `;
 
 export default Final
