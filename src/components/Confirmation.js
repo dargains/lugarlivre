@@ -30,7 +30,7 @@ const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleCon
         <span></span>
       </Body>
       <ButtonContainer>
-        <Button white color={backColor} handleClick={handleConfirmation}>Confirmar</Button>
+        <Button white color={`var(--m-0${backColor})`} handleClick={handleConfirmation}>Confirmar</Button>
         <AltButton white handleClick={handleBack} icon="arrow_back" />
       </ButtonContainer>
     </Container>
