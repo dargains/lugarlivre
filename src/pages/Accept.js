@@ -3,12 +3,16 @@ import styled from 'styled-components'
 import Axios from 'axios'
 import moment from 'moment'
 
+import Container from '../components/Container'
+import ButtonContainer from '../components/ButtonContainer'
 import Button from '../components/Button'
+import AltButton from '../components/AltButton'
 
 const AcceptScreen = () => {
   const baseUrl = 'http://myeverydayapps.com/public/_/items'
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
   const [owner, setOwner] = useState({})
+  const [believer, setBeliever] = useState({})
   const [loan, setLoan] = useState({})
   const [startDateString, setStartDateString] = useState('')
   const [endDateString, setEndDateString] = useState('')
@@ -26,7 +30,7 @@ const AcceptScreen = () => {
       </div>`
     })
 
-    Axios.post(emailEndpoint, data)
+    // Axios.post(emailEndpoint, data)
   }
   const getInfo = async id => {
     const loanResponse = await Axios(baseUrl + `/loans?filter[id][eq]=${id}`);
@@ -41,6 +45,7 @@ const AcceptScreen = () => {
 
     const believerResponse = await Axios(baseUrl + `/believers?filter[id][eq]=${believerId}`);
     const currentbeliever = believerResponse.data.data[0];
+    setBeliever(currentbeliever)
 
     setStartDateString(moment(currentLoan.start).isSame(currentLoan.end, 'year') ? moment(currentLoan.start).isSame(currentLoan.end, 'month') ? moment(currentLoan.start).format('DD') : moment(currentLoan.start).format('DD [de] MMMM') : moment(currentLoan.start).format('DD [de] MMMM [de] YYYY'));
     setEndDateString(moment(currentLoan.end).format("DD [de] MMMM [de] YYYY"))
@@ -62,45 +67,31 @@ const AcceptScreen = () => {
   }, []);
 
   return (
-    <Container>
-      <Title>Lugar livre</Title>
-      <Subtitle>Parabéns!</Subtitle>
+    <Container backColor="var(--m-05)">
       <Body>Tens um lugar reservado para ti.</Body>
       <Box>
-        <Body>{isSameDay ? `${endDateString}` : `De ${startDateString} a ${endDateString}`}.</Body>
+        <Body><strong>{believer.name}</strong> temos um lugar livre <strong>{isSameDay ? `${endDateString}` : `De ${startDateString} a ${endDateString}`}</strong>.</Body>
         <Body>Edificio {owner?.building}</Body>
         <Body>{owner?.spot}</Body>
+        <Body>Estás interessado(a)?</Body>
       </Box>
-      <Button>Guardar</Button>
+      <ButtonContainer>
+        <Button white color="var(--m-05)">Confirmar</Button>
+        <AltButton white icon="close" />
+      </ButtonContainer>
     </Container >
   )
 }
 
-const Container = styled.main`
-  width: 90%;
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 40px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0,0,0,.2);
-  text-align: center;
-`;
 const Box = styled.div`
   margin: 20px 0 60px;
 `;
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  margin-bottom: 40px;
-`;
-const Subtitle = styled.h2`
-  font-size: 1.2em;
-  margin-bottom: 20px;
-`;
 const Body = styled.p`
   font-size: 1em;
   margin-bottom: 10px;
   line-height: 1.2em;
+  color: var(--neu-01);
 `;
 
 export default AcceptScreen
