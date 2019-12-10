@@ -18,7 +18,7 @@ const BTN = styled.button`
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
-  color: ${props => props.white ? `var(--m-0${props.color})` : 'var(--neu-01)'};
+  color: ${props => props.white ? props.color : 'var(--neu-01)'};
   cursor: pointer;
 	height: 72px;
 	border-radius: 36px;
