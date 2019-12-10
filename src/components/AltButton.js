@@ -23,6 +23,10 @@ const BTN = styled.button`
   i {
     font-size: 32px;
   }
+  @media (min-width: 0) and (max-width: 340px) {
+    width: 48px;
+    height: 48px;
+	}
 `;
 
 export default AltButton;

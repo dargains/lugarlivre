@@ -27,7 +27,9 @@ const BTN = styled.button`
   line-height: 22px;
   text-transform: uppercase;
   background-color: ${props => props.white ? 'var(--neu-01)' : props.primary ? 'var(--m-01)' : 'var(--m-02)'};
-  /* background-color: red; */
+  @media (min-width: 0) and (max-width: 340px) {
+		height: auto;
+	}
 `;
 
 export default Button;
