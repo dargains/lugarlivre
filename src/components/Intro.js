@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactAutocomplete from 'react-autocomplete';
-import { DateRangePicker } from 'react-dates';
+import { DayPickerRangeController } from 'react-dates';
+import isAfterDay from 'react-dates/lib/utils/isAfterDay';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
@@ -17,7 +18,7 @@ import AltButton from '../components/AltButton'
 import logo from '../images/Logo.svg'
 
 const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, handleStartDateChange, handleEndDateChange, handleNext }) => {
-  const [focusedInput, setFocus] = useState(null)
+  const [focusedInput, setFocus] = useState('startDate')
   const [calendarOpened, setCalendarOpen] = useState(false)
   const [value, setValue] = useState(currentOwner.name)
   const [showError, setShowError] = useState(false)
@@ -105,21 +106,18 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       {
         calendarOpened
           ? <>
-            <DateRangePicker
+            <DayPickerRangeController
               startDate={startDate}
-              startDateId="startDate"
               endDate={endDate}
-              endDateId="endDate"
               numberOfMonths={1}
               minimumNights={0}
-              small={true}
               minDate={moment()}
               maxDate={moment().add(10, 'days')}
               onDatesChange={handleDateChange}
               focusedInput={focusedInput}
-              onFocusChange={input => setFocus(input)}
-              startDatePlaceholderText="Data início"
-              endDatePlaceholderText="Data fim"
+              onFocusChange={newFocus => { newFocus === 'endDate' ? setFocus('endDate') : setFocus('startDate') }}
+              enableOutsideDays={false}
+              isDayBlocked={day => isAfterDay(day, 'days')}
             />
             <Button handleClick={goToNext}>Continuar</Button>
           </>
@@ -134,9 +132,9 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
   );
 }
 
-const AutoCompleteContainer = styled.section`
+const AutoCompleteContainer = styled.article`
   width: 260px;
-  margin: 60px auto;
+  margin: 40px auto 24px;
   input {
     text-align: left;
     padding: 16px;
@@ -207,8 +205,8 @@ const Subtitle = styled.h2`
 
 const Error = styled.span`
   opacity: 0;
-  color: var(--m-02);
-  font-size: 0.8em;
+  color: var(--add-01);
+  font-size: 1em;
   transition: opacity .2s ease;
   &.show {
     opacity: 1;
