@@ -40,7 +40,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
               choosePerson(believers[i].id)
             }, 800)
           }
-        }, 300)
+        }, 500)
       } else {
         clearTimeout(timer)
         timer = null;
@@ -54,7 +54,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
       let scale = down ? 1.1 : 1 // Active cards lift up a bit
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
     })
-    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 400)
+    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 550)
   })
 
   // const isChosen = id => chosenBeliever?.id === id
@@ -155,7 +155,6 @@ const PersonCard = styled.div`
     h2,h3 {
       animation: fadeOut .2s ease-in .2s forwards;
     }
-  }
   }
   span:nth-of-type(1),
   span:nth-of-type(2) {
