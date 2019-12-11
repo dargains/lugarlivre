@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="182px" height="134px" viewBox="0 0 182 134" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="249px" height="134px" viewBox="0 0 249 134" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: sketchtool 61 (101010) - https://sketch.com -->
     <title>35C983DA-F0A9-4FB8-84F8-EDC3B841D74E</title>
     <desc>Created with sketchtool.</desc>
@@ -8,9 +8,9 @@
         <polygon id="path-3" points="0.00594 0.26792 248.68449 0.26792 248.68449 57.05 0.00594 57.05"></polygon>
         <polygon id="path-5" points="0.29006 0.32805 245.30831 0.32805 245.30831 97.756065 0.29006 97.756065"></polygon>
     </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="004" transform="translate(-193.000000, -453.000000)">
-            <g id="Cloud-01" transform="translate(193.000000, 453.000000)">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Assets-/-Cloud03">
+            <g id="Cloud-01">
                 <g id="Group-3" transform="translate(0.000000, 0.022220)">
                     <mask id="mask-2" fill="white">
                         <use xlink:href="#path-1"></use>
