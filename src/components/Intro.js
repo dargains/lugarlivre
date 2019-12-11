@@ -65,6 +65,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       </LogoComp>
       <Title>Lugar Livre</Title>
       <Subtitle>Partilha o teu lugar de estacionamento</Subtitle>
+      <label htmlFor="name" style={{ display: 'none' }} >Name</label>
       <AutoCompleteContainer>
         <ReactAutocomplete
           items={owners}
@@ -100,6 +101,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
             cursor: 'pointer',
             textAlign: 'left'
           }}
+          id="name"
         />
         <span className="border_tr" />
         <span className="border_bl" />
