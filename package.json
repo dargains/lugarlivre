@@ -10,11 +10,11 @@
     "parallax-js": "^3.1.0",
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
-    "react-dates": "^21.5.0",
+    "react-dates": "^21.5.1",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0-next.62",
-    "react-spring": "^9.0.0-beta.34",
+    "react-scripts": "^3.3.0",
+    "react-spring": "^9.0.0-canary.809.5.f01ecc2",
     "react-use-gesture": "^6.0.14",
     "styled-components": "^4.4.1"
   },
@@ -40,6 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.6.0"
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5"
   }
 }
