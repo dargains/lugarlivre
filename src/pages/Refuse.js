@@ -3,7 +3,7 @@ import Axios from 'axios'
 import styled from 'styled-components'
 
 const RefuseScreen = () => {
-  const baseUrl = 'http://myeverydayapps.com/public/_/items'
+  const baseUrl = 'https://myeverydayapps.com/public/_/items'
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
 
   const sendEmail = (owner, believer) => {
@@ -14,7 +14,7 @@ const RefuseScreen = () => {
       "emailSubject": `[Lugar Livre] Oferta recusada`,
       "emailMessage": `<div style="font-family: sans-serif;">
       <p>Olá ${owner.name}. ${believer.name} acaba de recusar a tua oferta de lugar.</p>
-      <p>Clica <a href="http://localhost:3000">aqui</a> para escolher outra pessoa.</p>
+      <p>Clica <a href="https://lugarlivre.azurewebsites.net">aqui</a> para escolher outra pessoa.</p>
       </div>`
     })
 

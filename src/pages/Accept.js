@@ -9,7 +9,7 @@ import Button from '../components/Button'
 import AltButton from '../components/AltButton'
 
 const AcceptScreen = () => {
-  const baseUrl = 'http://myeverydayapps.com/public/_/items'
+  const baseUrl = 'https://myeverydayapps.com/public/_/items'
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
   const [owner, setOwner] = useState({})
   const [believer, setBeliever] = useState({})

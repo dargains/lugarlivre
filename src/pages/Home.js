@@ -11,7 +11,7 @@ import Confirmation from '../components/Confirmation'
 import Final from '../components/Final'
 
 export default function Home() {
-  const baseUrl = 'http://myeverydayapps.com/public/_/items'
+  const baseUrl = 'https://myeverydayapps.com/public/_/items'
   const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
 
   const [step, setStep] = useState(0)
@@ -43,8 +43,8 @@ export default function Home() {
       "emailMessage": `<div style="font-family: sans-serif;">
       <h2>Hey, tens um lugar de garagem!</h2>
       <br />
-      <p>Clica <a href="http://localhost:3000/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
-      <p>Clica <a href="http://localhost:3000/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
+      <p>Clica <a href="https://lugarlivre.azurewebsites.net/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
+      <p>Clica <a href="https://lugarlivre.azurewebsites.net/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
       </div>`
     })
 
@@ -80,10 +80,10 @@ export default function Home() {
     if (ownerCookie) setCurrentOwner(ownerCookie)
 
     setData(true)
-    setTimeout(() => {
-      setStep(1)
+    // setTimeout(() => {
+    setStep(1)
 
-    }, 1000)
+    // }, 1000)
   }
 
   useEffect(() => {
