@@ -153,6 +153,7 @@ const AutoCompleteContainer = styled.article`
     background-color: ${props => props.theme.background};
     transition: all .2s ease;
     border: 0;
+    width: 100%;
     &::placeholder {
       color: var(--neu-04);
     }
