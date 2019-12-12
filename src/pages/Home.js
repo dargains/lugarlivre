@@ -10,9 +10,9 @@ import List from '../components/List'
 import Confirmation from '../components/Confirmation'
 import Final from '../components/Final'
 
+import { baseUrl, dataEndpoint, smsEndpoint, emailEndpoint } from '../helpers/endpoints'
+
 export default function Home() {
-  const baseUrl = 'https://myeverydayapps.com/public/_/items'
-  const emailEndpoint = 'https://functionstestlogs.azurewebsites.net/api/SendEmail?code=1k9alxFBsZFlF0mHUlV/1wG58CLO0Xo79aoAZOh4af1p1SWi3fkCgQ=='
 
   const [step, setStep] = useState(0)
   const [hasData, setData] = useState(false)
@@ -43,35 +43,52 @@ export default function Home() {
       "emailMessage": `<div style="font-family: sans-serif;">
       <h2>Hey, tens um lugar de garagem!</h2>
       <br />
-      <p>Clica <a href="https://lugarlivre.azurewebsites.net/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
-      <p>Clica <a href="https://lugarlivre.azurewebsites.net/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
+      <p>Clica <a href="${baseUrl}/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
+      <p>Clica <a href="${baseUrl}/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
       </div>`
     })
 
     Axios.post(emailEndpoint, data)
   }
 
+  const sendSMS = id => {
+    const { name, phone } = chosenBeliever
+    const accountSid = ''
+    const authToken = ''
+    const data = JSON.stringify({
+      To: '+351925595027',//`+351${phone}`,
+      From: '+17345476775',
+      Body: `Ganhaste um lugar de garagem. Para aceitar ou recusar vá para localhost:3000/accept?code=${id}`
+    })
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Basic ${Buffer.from(accountSid + ':' + authToken).toString('base64')}`
+    }
+    Axios.post(smsEndpoint, data, { headers: { Authorization: `Basic AC43e03b4c673010868acc52eb0e44d08f` } })
+  }
+
   const confirmLend = async () => {
 
-    const loansResponse = await Axios.post(baseUrl + '/loans', {
+    const loansResponse = await Axios.post(dataEndpoint + '/loans', {
       owner_id: currentOwner.id,
       believer_id: chosenBeliever.id,
       start: moment(startDate).format('YYYY-MM-DD'),
       end: moment(endDate).format('YYYY-MM-DD')
     })
     const { id } = loansResponse.data.data;
-    sendEmail(id);
+    sendSMS(id);
+    sendEmail(id)
     Cookies.set('lugarlivre', currentOwner.id);
     setStep(4)
   }
 
   const getInfo = async () => {
-    const ownersResponse = await Axios(baseUrl + '/owners')
+    const ownersResponse = await Axios(dataEndpoint + '/owners?sort=name')
     ownersResponse.data.data.forEach(owner => owner.value = owner.name)
     const owners = ownersResponse.data.data
     setOwners(owners)
 
-    const believersResponse = await Axios(baseUrl + '/believers')
+    const believersResponse = await Axios(dataEndpoint + '/believers')
     const believers = believersResponse.data.data
     setBelievers(believers)
 
