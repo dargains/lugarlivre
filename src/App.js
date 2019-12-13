@@ -6,7 +6,6 @@ import { lightTheme, darkTheme } from './themes'
 // import Header from './components/Header'
 import Home from './pages/Home'
 import Accept from './pages/Accept'
-import Refuse from './pages/Refuse'
 import Error from './pages/Error'
 
 const App = () => {
@@ -15,13 +14,9 @@ const App = () => {
     <ThemeProvider theme={lightTheme}>
       <Router>
         <main className="App" style={{ height }}>
-          {/* <Header /> */}
           <Switch>
             <Route path="/accept">
               <Accept />
-            </Route>
-            <Route path="/refuse">
-              <Refuse />
             </Route>
             <Route path="/error">
               <Error />
