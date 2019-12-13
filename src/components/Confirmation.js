@@ -16,9 +16,9 @@ const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleCon
   const isToday = today.isSame(startDate, 'd') && today.isSame(endDate, 'd')
   const isTomorrow = tomorrow.isSame(startDate, 'd') && tomorrow.isSame(endDate, 'd')
 
-  const startDateString = moment(startDate).isSame(endDate, 'year') ? moment(startDate).isSame(endDate, 'month') ? moment(startDate).format('DD') : moment(startDate).format('DD [de] MMMM') : moment(startDate).format('DD [de] MMMM [de] YYYY')
+  const startDateString = moment(startDate).isSame(endDate, 'year') ? moment(startDate).isSame(endDate, 'month') ? moment(startDate).format('DD') : moment(startDate).format('DD [de] MMMM') : moment(startDate).format('DD [de] MMMM')
 
-  const endDateString = moment(endDate).format("DD [de] MMMM [de] YYYY")
+  const endDateString = moment(endDate).format("DD [de] MMMM")
 
   const backColor = believers.indexOf(chosenBeliever) % 5 + 1
 
@@ -26,7 +26,7 @@ const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleCon
     <Container backColor={`var(--m-0${backColor})`}>
       <Body>
         <span></span>
-        <p>O seu lugar está livre <strong>{isToday ? 'hoje' : isTomorrow ? 'amanhã' : isSame ? `a ${startDate.format("DD [de] MMMM [de] YYYY")}` : `de ${startDateString} a ${endDateString}`}</strong> e será partilhado com <strong>{chosenBeliever.name}</strong></p>
+        <p>O teu lugar está livre<br /><strong>{isToday ? 'hoje' : isTomorrow ? 'amanhã' : isSame ? `a ${startDate.format("DD [de] MMMM")}` : `de ${startDateString} a ${endDateString}`}</strong> e será partilhado com <strong>{chosenBeliever.name}</strong></p>
         <span></span>
       </Body>
       <ButtonContainer>
@@ -39,11 +39,11 @@ const Confirmation = ({ chosenBeliever, startDate, endDate, believers, handleCon
 
 const Body = styled.div`
   max-width: 262px;
-  margin: 0 auto;
+  margin: 40px auto 0;
   text-align: center;
   padding: 60px 24px;
   p {
-    font-size: 24px;
+    font-size: 22px;
     line-height: 36px;
     letter-spacing: -0.8px;
     color: var(--neu-01);
