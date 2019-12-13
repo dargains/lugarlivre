@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
-import styled from 'styled-components'
 import Cookies from 'js-cookie'
 import moment from 'moment'
 
@@ -37,7 +36,7 @@ export default function Home() {
     const { name, email } = chosenBeliever
     const data = JSON.stringify({
       "fromName": "Lugar Livre",
-      "toEmail": "andre.dargains@fullsix.pt", //email,
+      "toEmail": email,
       "fromEmail": "lugar.livre@fullsix.pt",
       "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
       "emailMessage": `<div style="font-family: sans-serif;">
@@ -53,18 +52,20 @@ export default function Home() {
 
   const sendSMS = id => {
     const { name, phone } = chosenBeliever
-    const accountSid = ''
-    const authToken = ''
-    const data = JSON.stringify({
-      To: '+351925595027',//`+351${phone}`,
-      From: '+17345476775',
-      Body: `Ganhaste um lugar de garagem. Para aceitar ou recusar vá para localhost:3000/accept?code=${id}`
-    })
+    const accountSid = 'AC43e03b4c673010868acc52eb0e44d08f'
+    const authToken = '8c11dffa625ddea372252dfca287999b'
+
+    const params = new URLSearchParams();
+    params.append('To', `+351${phone}`);
+    params.append('From', '+17345476775');
+    params.append('Body', `Olá ${name}, temos um lugar livre para ti. Para aceitar ou recusar: ${baseUrl}/accept?code=${id}`)
+
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       "Authorization": `Basic ${Buffer.from(accountSid + ':' + authToken).toString('base64')}`
     }
-    Axios.post(smsEndpoint, data, { headers: { Authorization: `Basic AC43e03b4c673010868acc52eb0e44d08f` } })
+
+    Axios.post(smsEndpoint, params, { headers })
   }
 
   const confirmLend = async () => {
@@ -77,7 +78,7 @@ export default function Home() {
     })
     const { id } = loansResponse.data.data;
     sendSMS(id);
-    sendEmail(id)
+    // sendEmail(id)
     Cookies.set('lugarlivre', currentOwner.id);
     setStep(4)
   }
@@ -100,7 +101,7 @@ export default function Home() {
     // setTimeout(() => {
     setStep(1)
 
-    // }, 1000)
+    // }, 1200)
   }
 
   useEffect(() => {
@@ -135,7 +136,6 @@ export default function Home() {
         step === 2 &&
         <List
           believers={believers}
-          chosenBeliever={chosenBeliever}
           handleBelieverChange={handleBelieverChange}
           handleNext={() => goToStep(3)}
           handleBack={() => goToStep(1)}
