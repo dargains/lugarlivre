@@ -16,6 +16,9 @@ const H1 = styled.h1`
   line-height: 27px;
   text-align: center;
   text-transform: uppercase;
+  opacity: 0;
+  transform: scale(0.7);
+  animation: fadeInGrow .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .4s forwards;
 `;
 
 export default Title
