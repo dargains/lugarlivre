@@ -43,6 +43,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
     goToNext()
   }
   const goToNext = () => {
+    if (startDate && !endDate) handleEndDateChange(startDate)
     if (currentOwner.name) {
       document.querySelector('input').classList.remove('error')
       setShowError(false)
@@ -128,7 +129,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
               isOutsideRange={(day) => !isInclusivelyAfterDay(day, moment())
                 || isInclusivelyAfterDay(day, moment().add(1, 'months'))}
             />
-            <Button white color="var(--neu-06)" handleClick={goToNext} >Continuar</Button>
+            {startDate && <Button white color="var(--neu-06)" handleClick={goToNext} >Continuar</Button>}
           </div>
         </CalendarContainer>
       }
@@ -137,7 +138,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
         <Button handleClick={() => setDate('tomorrow')} isActive={isTomorrow}>amanhã</Button>
         <AltButton handleClick={() => setCalendarOpen(true)} icon="date_range" />
       </ButtonContainer>
-      <Error className={showError ? 'show' : ''}>Falta dizer quem és</Error>
+      <Error className={showError ? 'show' : ''}>indica o teu nome</Error>
     </Container>
   );
 }
@@ -145,6 +146,9 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
 const AutoCompleteContainer = styled.article`
   width: 260px;
   margin: 40px auto 24px;
+  opacity: 0;
+  transform: scale(0.7);
+  animation: fadeInGrow .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .7s forwards;
   input {
     text-align: left;
     padding: 16px;
@@ -232,7 +236,7 @@ const CalendarContainer = styled.div`
     animation: fadeInGrow 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   }
   .DayPicker {
-    margin-top: 30px;
+    margin: 30px 0;
   }
   .CalendarDay__default {
     color: var(--neu-03);
@@ -283,6 +287,9 @@ const Subtitle = styled.h2`
   color: ${props => props.theme.text};
   max-width: 260px;
   margin: 20px auto;
+  opacity: 0;
+  transform: scale(0.7);
+  animation: fadeInGrow .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .5s forwards;
 `;
 
 const Error = styled.span`
@@ -298,6 +305,9 @@ const Error = styled.span`
 const LogoComp = styled.figure`
   max-width: 40px;
   margin: 0 auto 12px;
+  opacity: 0;
+  transform: scale(0.7);
+  animation: fadeInGrow .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .3s forwards;
 `;
 
 export default Intro
