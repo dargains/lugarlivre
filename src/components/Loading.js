@@ -2,24 +2,29 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Container from './Container'
-import Title from './Title'
-import logo from '../images/Logo.svg'
+import logoGif from '../images/Logo.gif'
 
 const Loading = () => {
   return (
     <Container>
-      <LogoComp>
-        <img src={logo} alt="Lugar Livre" />
-      </LogoComp>
-      <Title>Lugar Livre</Title>
-      <h2>A carregar</h2>
+      <Box>
+        <LogoComp>
+          <img src={logoGif} alt="Lugar Livre" />
+        </LogoComp>
+      </Box>
     </Container>
   )
 }
 
+const Box = styled.figure`
+height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const LogoComp = styled.figure`
-  max-width: 40px;
-  margin: 0 auto 12px;
+  max-width: 80px;
+  margin: 0 auto;
 `;
 
 export default Loading
