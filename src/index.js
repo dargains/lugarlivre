@@ -11,5 +11,5 @@ ReactDOM.render(<App />, document.getElementById('ll'));
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('./service-worker.js')
-    .then(function () { console.log('Service Worker v1.0 Registered'); });
+    .then(function () { console.log('Service Worker v1.1 Registered'); });
 }
