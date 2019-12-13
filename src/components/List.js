@@ -15,7 +15,7 @@ const from = i => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => `perspective(0) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, handleBack }) => {
+const List = ({ believers, handleBelieverChange, handleNext, handleBack }) => {
   const [showError, setShowError] = useState(false)
   const [gone] = useState(() => new Set())
   const [chosen, setChosen] = useState(null)
@@ -40,7 +40,7 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
               choosePerson(believers[i].id)
             }, 800)
           }
-        }, 500)
+        }, 300)
       } else {
         clearTimeout(timer)
         timer = null;
@@ -54,19 +54,18 @@ const List = ({ believers, chosenBeliever, handleBelieverChange, handleNext, han
       let scale = down ? 1.1 : 1 // Active cards lift up a bit
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
     })
-    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 550)
+    if (!down && gone.size === believers.length) setTimeout(() => gone.clear() || set(i => to(i)), 350)
   })
 
-  // const isChosen = id => chosenBeliever?.id === id
   const choosePerson = id => {
     setShowError(false)
     handleBelieverChange(id)
     handleNext();
   }
-  const chooseRandom = () => {
-    const randomId = believers[Math.floor(Math.random() * believers.length)];
-    choosePerson(randomId.id)
-  }
+  // const chooseRandom = () => {
+  //   const randomId = believers[Math.floor(Math.random() * believers.length)];
+  //   choosePerson(randomId.id)
+  // }
 
   const AnimatedPersonCard = animated(PersonCard)
 
