@@ -51,6 +51,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
       handleNext()
     } else {
       document.querySelector('input').classList.add('error')
+      setCalendarOpen(false)
       setShowError(true)
     }
   }
@@ -147,8 +148,9 @@ const AutoCompleteContainer = styled.article`
   width: 260px;
   margin: 40px auto 24px;
   opacity: 0;
-  transform: scale(0.7);
-  animation: fadeInGrow .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .7s forwards;
+  /* transform: scale(0.7); */
+  z-index: 1;
+  animation: fadeIn .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .7s forwards;
   input {
     text-align: left;
     padding: 16px;
