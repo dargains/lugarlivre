@@ -80,7 +80,7 @@ const AcceptScreen = () => {
 
   const handleDecision = accepted => {
     sendEmail(owner, believer, accepted)
-    if (owner.phone) sendSMS(owner, believer, accepted)
+    if (owner.phone) sendSMS(owner, accepted)
     Axios(dataEndpoint + `/loans/${id}`, {
       method: 'PATCH',
       data: {
