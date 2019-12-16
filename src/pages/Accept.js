@@ -11,9 +11,10 @@ import Button from '../components/Button'
 import AltButton from '../components/AltButton'
 
 const AcceptScreen = () => {
+  const [opened, setOpened] = useState(false)
+  const [decided, setDecided] = useState(false)
   const [owner, setOwner] = useState({})
   const [believer, setBeliever] = useState({})
-  const [loan, setLoan] = useState({})
   const [id, setId] = useState(null)
   const [startDateString, setStartDateString] = useState('')
   const [endDateString, setEndDateString] = useState('')
@@ -37,26 +38,29 @@ const AcceptScreen = () => {
     Axios.post(emailEndpoint, data)
   }
 
-  const sendSMS = (owner, believer, accepted) => {
-    const accountSid = ''
-    const authToken = ''
+  const sendSMS = (owner, accepted) => {
+    const accountSid = 'AC43e03b4c673010868acc52eb0e44d08f'
+    const authToken = '8c11dffa625ddea372252dfca287999b'
     const message = accepted ? `O teu lugar foi atribuído com sucesso.` : `O teu lugar continua livre. Podes atribuí-lo a outra pessoa.`
-    const data = JSON.stringify({
-      To: `+351${owner.phone}`,
-      From: '+17345476775',
-      Body: message
-    })
+
+
+    const params = new URLSearchParams();
+    params.append('To', `+351${owner.phone}`);
+    params.append('From', '+17345476775');
+    params.append('Body', message)
+
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       "Authorization": `Basic ${Buffer.from(accountSid + ':' + authToken).toString('base64')}`
     }
-    Axios.post(smsEndpoint, data, { headers: { Authorization: `Basic AC43e03b4c673010868acc52eb0e44d08f` } })
+
+    Axios.post(smsEndpoint, params, { headers })
   }
 
   const getInfo = async id => {
     const loanResponse = await Axios(dataEndpoint + `/loans?filter[id][eq]=${id}`);
     const currentLoan = loanResponse.data.data[0];
-    setLoan(currentLoan);
+
     const ownerId = currentLoan.owner_id;
     const believerId = currentLoan.believer_id;
 
@@ -74,27 +78,20 @@ const AcceptScreen = () => {
 
   }
 
-  const handleAccept = () => {
-    sendEmail(owner, believer, false)
-    if (owner.phone) sendSMS(owner, believer, false)
-
+  const handleDecision = accepted => {
+    sendEmail(owner, believer, accepted)
+    if (owner.phone) sendSMS(owner, believer, accepted)
     Axios(dataEndpoint + `/loans/${id}`, {
       method: 'PATCH',
       data: {
-        status: 'accepted'
+        status: accepted ? 'accepted' : 'refused'
       }
     })
-  }
-  const handleRefuse = () => {
-    sendEmail(owner, believer, true)
-    if (owner.phone) sendSMS(owner, believer, true)
-
-    Axios(dataEndpoint + `/loans/${id}`, {
-      method: 'PATCH',
-      data: {
-        status: 'refused'
-      }
-    })
+    setOpened(false)
+    setTimeout(() => {
+      setOpened(true)
+      setDecided(accepted ? 'accepted' : 'refused')
+    }, 600)
   }
 
   useEffect(() => {
@@ -102,28 +99,59 @@ const AcceptScreen = () => {
     const id = parseInt(search.split('=')[1]);
     setId(id)
     getInfo(id)
+    setOpened(true)
   }, []);
 
   return (
     <Container backColor={color}>
-      <Box>
-        <span></span>
-        <Body><strong>{believer.name}</strong><br /> temos um lugar livre <strong><br />{isSameDay ? `a ${endDateString}` : `de ${startDateString} a ${endDateString}`}</strong>.</Body>
-        <Body>Edificio <strong>{owner.building}</strong></Body>
-        <Body><strong>{owner.spot}</strong></Body>
-        <span></span>
-      </Box>
-      <ButtonContainer>
-        <Button white color={color} onClick={handleAccept}>Confirmar</Button>
-        <AltButton white icon="close" onClick={handleRefuse} />
-      </ButtonContainer>
+      {
+        decided === 'accepted'
+          ? <Box opened={opened}>
+            <span></span>
+            <Body>Lugar reservado para <strong>{believer.name}</strong><br /><strong>{isSameDay ? `a ${endDateString}` : `de ${startDateString} a ${endDateString}`}</strong>.</Body>
+            <Body>Edificio <strong>{owner.building}</strong></Body>
+            <Body><strong>{owner.spot}</strong></Body>
+            <span></span>
+          </Box>
+          : decided === 'refused'
+            ? <Box opened={opened}>
+              <span></span>
+              <Body><strong>{believer.name}</strong><br />Obrigado, fica para a próxima.</Body>
+              <span></span>
+            </Box>
+            : <>
+              <Box opened={opened}>
+                <span></span>
+                <Body><strong>{believer.name}</strong><br /> temos um lugar livre <br /><strong>{isSameDay ? `a ${endDateString}` : `de ${startDateString} a ${endDateString}`}</strong>.</Body>
+                <Body>Edificio <strong>{owner.building}</strong></Body>
+                <Body><strong>{owner.spot}</strong></Body>
+                <span></span>
+              </Box>
+              <ButtonContainer>
+                <Button white color={color} handleClick={() => handleDecision(true)}>Confirmar</Button>
+                <AltButton white icon="close" handleClick={() => handleDecision(false)} />
+              </ButtonContainer>
+            </>
+      }
     </Container >
   )
 }
 
-const Box = styled.div`
+const Box = styled.div.attrs(props => ({ className: props.opened ? 'opened' : 'not' }))`
   margin: 80px auto 60px;
   max-width: 260px;
+  &.opened {
+    span:nth-of-type(1) {
+      animation: openTopRightBracket .5s cubic-bezier(0.175, 0.885, 0.32, 1.4) .5s forwards;
+    }
+    span:nth-of-type(2) {
+      animation: openBottomLeftBracket .5s cubic-bezier(0.175, 0.885, 0.32, 1.4) .5s forwards;
+    }
+    p {
+      
+  animation: fadeIn .5s ease-in-out .8s forwards;
+    }
+  }
   span:nth-of-type(1),
   span:nth-of-type(2) {
     position: absolute;
@@ -148,7 +176,7 @@ const Box = styled.div`
   }
   span:nth-of-type(1) {
     transform: translate3d(-23%,-9%,0);
-    animation: openTopRightBracket .5s cubic-bezier(0.175, 0.885, 0.32, 1.4) .5s forwards;
+    animation: closeTopRightBracket .5s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
     &:before,
     &:after {
       top: 0;
@@ -157,7 +185,7 @@ const Box = styled.div`
   }
   span:nth-of-type(2) {
     transform: translate3d(-77%,-7%,0);
-    animation: openBottomLeftBracket .5s cubic-bezier(0.175, 0.885, 0.32, 1.4) .5s forwards;
+      animation: closeBottomLeftBracket .5s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
     &:before,
     &:after {
       bottom: 0;
@@ -174,7 +202,6 @@ const Body = styled.p`
   letter-spacing: -0.73px;
   color: var(--neu-01);
   opacity: 0;
-  animation: fadeIn .5s ease-in-out .8s forwards;
   max-width: 244px;
 `;
 
