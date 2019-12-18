@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
 const AltButton = ({ handleClick, icon, white }) => {
@@ -28,5 +29,11 @@ const BTN = styled.button`
     height: 48px;
 	}
 `;
+
+AltButton.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+  icon: PropTypes.string.isRequired,
+  white: PropTypes.bool
+}
 
 export default AltButton;

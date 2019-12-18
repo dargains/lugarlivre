@@ -19,7 +19,7 @@ const AcceptScreen = () => {
   const [startDateString, setStartDateString] = useState('')
   const [endDateString, setEndDateString] = useState('')
   const [isSameDay, setSameDay] = useState(false)
-  const [color, setColor] = useState(`var(--m-0${Math.floor(Math.random() * 5) + 1})`)
+  const [color] = useState(`var(--m-0${Math.floor(Math.random() * 5) + 1})`)
 
   const sendEmail = (owner, believer, accepted) => {
     const message = accepted

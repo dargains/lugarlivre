@@ -22,20 +22,17 @@ const List = ({ believers, handleBelieverChange, handleNext, handleBack }) => {
 
   const [props, set] = useSprings(believers.length, i => ({ ...to(i), from: from(i) }))
 
-  var timer = null;
-
   const drag = useDrag(({ args: [index], down, movement: [mx], distance, direction: [xDir], velocity, last }) => {
-    const trigger = velocity > 0.2 // If you flick hard enough it should trigger the card to fly out
-    const dir = xDir < 0 ? -1 : 1 // Direction should either point left or right
-    if (!down && trigger) gone.add(index) // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
+    const trigger = velocity > 0.2
+    const dir = xDir < 0 ? -1 : 1
+    if (!down && trigger) gone.add(index)
     set(i => {
-      if (index !== i) return // We're only interested in changing spring-data for the current spring
+      if (index !== i) return
       const isGone = gone.has(index)
-      const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
-      const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0) // How much the card tilts, flicking it harder makes it rotate faster
-      let scale = down ? 1.1 : 1 // Active cards lift up a bit
+      const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0
+      const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
+      let scale = down ? 1.1 : 1
       if (last && velocity === 0) {
-        // scale = 1.3
         setChosen(i)
         setTimeout(() => {
           choosePerson(believers[i].id)
@@ -92,7 +89,7 @@ const List = ({ believers, handleBelieverChange, handleNext, handleBack }) => {
 }
 
 const SliderContainer = styled.div`
-height: 60vh;
+  height: 60vh;
   article {
     position: absolute;
     width: 100%;
@@ -210,6 +207,11 @@ const Error = styled.span`
   }
 `;
 
-
+List.propTypes = {
+  believers: PropTypes.array,
+  handleBelieverChange: PropTypes.func,
+  handleNext: PropTypes.func,
+  handleBack: PropTypes.func
+}
 
 export default List;

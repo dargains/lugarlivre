@@ -1,5 +1,6 @@
 //import React, { useState } from 'react'
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactAutocomplete from 'react-autocomplete';
 import { DayPickerRangeController } from 'react-dates';
@@ -58,7 +59,7 @@ const Intro = ({ owners, currentOwner, handleOwnerChange, startDate, endDate, ha
 
   useEffect(() => {
     if (startDate && endDate && !isToday && !isTomorrow) setCalendarOpen(true)
-  }, [])
+  }, [startDate, endDate, isToday, isTomorrow])
 
   return (
     <Container>
@@ -311,5 +312,16 @@ const LogoComp = styled.figure`
   transform: scale(0.7);
   animation: fadeInGrow .2s cubic-bezier(0.175, 0.885, 0.32, 1.4) .3s forwards;
 `;
+
+Intro.propTypes = {
+  owners: PropTypes.array.isRequired,
+  currentOwner: PropTypes.object,
+  handleOwnerChange: PropTypes.func.isRequired,
+  startDate: PropTypes.instanceOf(moment),
+  endDate: PropTypes.instanceOf(moment),
+  handleStartDateChange: PropTypes.func.isRequired,
+  handleEndDateChange: PropTypes.func.isRequired,
+  handleNext: PropTypes.func.isRequired
+}
 
 export default Intro

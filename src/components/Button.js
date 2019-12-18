@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const Button = ({ children, handleClick, primary, white, color }) => {
@@ -31,5 +32,16 @@ const BTN = styled.button`
 		height: auto;
 	}
 `;
+
+Button.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  handleClick: PropTypes.func.isRequired,
+  primary: PropTypes.bool,
+  white: PropTypes.bool,
+  color: PropTypes.string
+}
 
 export default Button;

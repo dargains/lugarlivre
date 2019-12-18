@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import moment from 'moment'
 
@@ -91,5 +92,14 @@ const Body = styled.div`
     }
   }
 `;
+
+Confirmation.propTypes = {
+  chosenBeliever: PropTypes.object,
+  startDate: PropTypes.instanceOf(moment),
+  endDate: PropTypes.instanceOf(moment),
+  believers: PropTypes.array.isRequired,
+  handleConfirmation: PropTypes.func.isRequired,
+  handleBack: PropTypes.func.isRequired
+}
 
 export default Confirmation;

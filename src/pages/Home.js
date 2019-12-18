@@ -9,12 +9,12 @@ import List from '../components/List'
 import Confirmation from '../components/Confirmation'
 import Final from '../components/Final'
 
-import { baseUrl, dataEndpoint, smsEndpoint, emailEndpoint } from '../helpers/endpoints'
+import { baseUrl, dataEndpoint, smsEndpoint } from '../helpers/endpoints'
 
 export default function Home() {
 
   const [step, setStep] = useState(0)
-  const [hasData, setData] = useState(false)
+  // const [hasData, setData] = useState(false)
 
   const [owners, setOwners] = useState([])
   const [believers, setBelievers] = useState([])
@@ -32,23 +32,23 @@ export default function Home() {
     setChosenBeliever(newBeliever)
   }
 
-  const sendEmail = id => {
-    const { name, email } = chosenBeliever
-    const data = JSON.stringify({
-      "fromName": "Lugar Livre",
-      "toEmail": email,
-      "fromEmail": "lugar.livre@fullsix.pt",
-      "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
-      "emailMessage": `<div style="font-family: sans-serif;">
-      <h2>Hey, tens um lugar de garagem!</h2>
-      <br />
-      <p>Clica <a href="${baseUrl}/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
-      <p>Clica <a href="${baseUrl}/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
-      </div>`
-    })
+  // const sendEmail = id => {
+  //   const { name, email } = chosenBeliever
+  //   const data = JSON.stringify({
+  //     "fromName": "Lugar Livre",
+  //     "toEmail": email,
+  //     "fromEmail": "lugar.livre@fullsix.pt",
+  //     "emailSubject": `Olá ${name}, alguém acaba de oferecer-lhe um lugar de garagem!`,
+  //     "emailMessage": `<div style="font-family: sans-serif;">
+  //     <h2>Hey, tens um lugar de garagem!</h2>
+  //     <br />
+  //     <p>Clica <a href="${baseUrl}/accept?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para aceitar</p>
+  //     <p>Clica <a href="${baseUrl}/refuse?code=${id}" style="display:inline-block; padding: 5px 10px; color: #f9c653;">aqui</a> para recusar</p>
+  //     </div>`
+  //   })
 
-    Axios.post(emailEndpoint, data)
-  }
+  //   Axios.post(emailEndpoint, data)
+  // }
 
   const sendSMS = id => {
     const { name, phone } = chosenBeliever
@@ -97,7 +97,7 @@ export default function Home() {
     const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
     if (ownerCookie) setCurrentOwner(ownerCookie)
 
-    setData(true)
+    // setData(true)
     // setTimeout(() => {
     setStep(1)
 
