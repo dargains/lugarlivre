@@ -1,4 +1,4 @@
-var cacheName = 'lugarlivre v1.1';
+var cacheName = 'lugarlivre v1.2';
 var filesToCache = [
   '/',
   '/index.html',
