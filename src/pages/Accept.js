@@ -29,7 +29,7 @@ const AcceptScreen = () => {
       "fromName": "Lugar Livre",
       "toEmail": owner.email,
       "fromEmail": "lugar.livre@fullsix.pt",
-      "emailSubject": `[Lugar Livre] Oferta aceite`,
+      "emailSubject": accepted ? `[Lugar Livre] Oferta aceite` : `[Lugar Livre] Oferta recusada`,
       "emailMessage": `<div style="font-family: sans-serif;">
         ${message}
       </div>`
@@ -87,10 +87,10 @@ const AcceptScreen = () => {
         status: accepted ? 'accepted' : 'refused'
       }
     })
+    setDecided(accepted ? 'accepted' : 'refused')
     setOpened(false)
     setTimeout(() => {
       setOpened(true)
-      setDecided(accepted ? 'accepted' : 'refused')
     }, 600)
   }
 
