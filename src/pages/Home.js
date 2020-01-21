@@ -52,12 +52,12 @@ export default function Home() {
 
   const sendSMS = id => {
     const { name, phone } = chosenBeliever
-    const accountSid = 'AC43e03b4c673010868acc52eb0e44d08f'
-    const authToken = '8c11dffa625ddea372252dfca287999b'
+    const accountSid = 'AC9a08dbf09016f52c1649725892ea596c'
+    const authToken = '61396e07ef4ae88d8ac13ef764aa87fb'
 
     const params = new URLSearchParams();
     params.append('To', `+351${phone}`);
-    params.append('From', '+17345476775');
+    params.append('From', '+17174969522');
     params.append('Body', `Olá ${name}, temos um lugar livre para ti. Para aceitar ou recusar: ${baseUrl}/accept?code=${id}`)
 
     const headers = {
