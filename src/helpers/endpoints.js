@@ -1,4 +1,4 @@
-export const baseUrl = 'https://lugarlivre.azurewebsites.net'
+export const baseUrl = 'https://lugarlivre.myeverydayapps.com'
 
 export const dataEndpoint = 'https://myeverydayapps.com/public/_/items'
 
