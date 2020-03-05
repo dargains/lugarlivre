@@ -122,7 +122,7 @@ const AcceptScreen = () => {
             : <>
               <Box opened={opened}>
                 <span></span>
-                <Body><strong>{believer.name}</strong><br /> temos um lugar livre <br /><strong>{isSameDay ? `a ${endDateString}` : `de ${startDateString} a ${endDateString}`}</strong>.</Body>
+                <Body><strong>{believer.name}</strong><br /> {owner.name} está a oferecer um lugar <br /><strong>{isSameDay ? `a ${endDateString}` : `de ${startDateString} a ${endDateString}`}</strong>.</Body>
                 <Body>Edificio <strong>{owner.building}</strong></Body>
                 <Body><strong>{owner.spot}</strong></Body>
                 <span></span>
