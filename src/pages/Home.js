@@ -18,6 +18,7 @@ export default function Home() {
 
   const [owners, setOwners] = useState([])
   const [believers, setBelievers] = useState([])
+  const [loans, setLoans] = useState([])
   const [currentOwner, setCurrentOwner] = useState({})
   const [chosenBeliever, setChosenBeliever] = useState({})
   const [startDate, setStartDate] = useState(null)
@@ -83,15 +84,38 @@ export default function Home() {
     setStep(4)
   }
 
-  const getInfo = async () => {
+  const shuffle = array => {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  const getData = async () => {
     const ownersResponse = await Axios(dataEndpoint + '/owners?sort=name')
     ownersResponse.data.data.forEach(owner => owner.value = owner.name)
     const owners = ownersResponse.data.data
     setOwners(owners)
 
+    // const loansResponse = await Axios(dataEndpoint + '/loans')
+    // const loans = loansResponse.data.data
+    // setLoans(loans)
+
     const believersResponse = await Axios(dataEndpoint + '/believers')
     const believers = believersResponse.data.data
-    setBelievers(believers)
+    setBelievers(shuffle(believers))
 
     const ownerCookieId = Cookies.get('lugarlivre')
     const ownerCookie = owners.find(owner => owner.id === parseInt(ownerCookieId))
@@ -105,7 +129,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getInfo()
+    getData()
   }, []);
 
   return (
